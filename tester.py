@@ -14,6 +14,8 @@ class PuzzleTester:
 
     @staticmethod
     def generate_solvable_state(num_moves=20):
+        # seed the random number generator
+        random.seed()
         current_state = State(TARGET_A)
         for _ in range(num_moves):
             children = current_state.generate_children()

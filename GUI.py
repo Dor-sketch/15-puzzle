@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import messagebox, Button
 from tester import PuzzleTester
 from Tiles import BFS, IDDFS, GBFS, AStar, TARGET_A, TARGET_B, PriorityQueueNode, Node, runSearchAlgorithms
+from PIL import Image, ImageSequence, ImageGrab
 
 class EightPuzzleGUI:
     def __init__(self, master):
@@ -11,22 +12,35 @@ class EightPuzzleGUI:
         self.tiles = [' ', '1', '2', '3', '4', '5', '6', '7', '8']
         self.buttons = []
         # Create buttons for each algorithm
-        self.bfs_button = Button(root, text="Run BFS", command=self.run_bfs, font=("Helvetica", 14), bg='lightblue', activebackground='lightgreen', bd=3, relief='ridge', background='lightblue')
-        self.gbfs_button = Button(root, text="Run GBFS", command=self.run_gbfs, font=("Helvetica", 14), bg='lightblue', activebackground='lightgreen', bd=3, relief='ridge')
-        self.astar_button = Button(root, text="Run A*", command=self.run_astar, font=("Helvetica", 14), bg='lightblue', activebackground='lightgreen', bd=3, relief='ridge')
-        self.iddfs_button = Button(root, text="Run IDDFS", command=self.run_iddfs, font=("Helvetica", 14), bg='lightblue', activebackground='lightgreen', bd=3, relief='ridge', background='lightblue', activeforeground='lightgreen', fg='black')
+        # Create a frame to hold the buttons
+        button_frame = tk.Frame(self.master)
+        button_frame.pack(fill=tk.BOTH, expand=True)
 
-        # Pack the buttons onto the screen
-        self.bfs_button.pack()
-        self.gbfs_button.pack()
-        self.astar_button.pack()
-        self.iddfs_button.pack()
+        # Create buttons for each algorithm
+        self.gbfs_button = Button(button_frame, text="Run GBFS", command=self.run_gbfs, font=("Helvetica", 14), bg='lightblue', activebackground='lightgreen', bd=3, relief='ridge')
+        self.astar_button = Button(button_frame, text="Run A*", command=self.run_astar, font=("Helvetica", 14), bg='lightblue', activebackground='lightgreen', bd=3, relief='ridge')
+        self.iddfs_button = Button(button_frame, text="Run IDDFS", command=self.run_iddfs, font=("Helvetica", 14), bg='lightblue', activebackground='lightgreen', bd=3, relief='ridge', background='lightblue', activeforeground='lightgreen', fg='black')
+        self.generate_GIF_button = Button(button_frame, text="Generate GIF", command=self.generate_GIF, font=("Helvetica", 14), bg='lightblue', activebackground='lightgreen', bd=3, relief='ridge', background='lightblue', activeforeground='lightgreen', fg='black')
 
-        frame = tk.Frame(self.master)
-        frame.pack()
+        # Grid the buttons onto the screen
+        self.gbfs_button.grid(row=0, column=0, sticky='nsew')
+        self.astar_button.grid(row=1, column=0, sticky='nsew')
+        self.iddfs_button.grid(row=2, column=0, sticky='nsew')
+        self.generate_GIF_button.grid(row=3, column=0, sticky='nsew')
+
+        # Configure the rows to expand when the window is resized
+        for i in range(4):
+            button_frame.grid_rowconfigure(i, weight=1)
+
+        # Configure the column to expand when the window is resized
+        button_frame.grid_columnconfigure(0, weight=1)
+
+        number_frame = tk.Frame(self.master)
+        number_frame.pack(fill=tk.BOTH, expand=True)
+
 
         for i in range(9):
-            btn = tk.Button(frame,
+            btn = tk.Button(number_frame,
                             text=self.tiles[i],
                             command=lambda i=i: self.move_tile(i),
                             height=2,
@@ -38,8 +52,13 @@ class EightPuzzleGUI:
                             relief='ridge',
                             foreground='blue'
                             )
-            btn.grid(row=i // 3, column=i % 3)
+            btn.grid(row=i // 3, column=i % 3, sticky='nsew')
             self.buttons.append(btn)
+
+        # Configure the rows and columns to expand when the window is resized
+        for i in range(3):
+            number_frame.grid_rowconfigure(i, weight=1)
+            number_frame.grid_columnconfigure(i, weight=1)
 
         self.shuffle_button = tk.Button(
             self.master, text="Shuffle", command=self.shuffle_tiles)
@@ -108,6 +127,32 @@ class EightPuzzleGUI:
     def run_iddfs(self):
         iddfs_path = runSearchAlgorithms(IDDFS, self.tiles)
         self.perform_path(iddfs_path)
+
+
+    def generate_GIF(self):
+        """
+        take screenshots of the puzzle state at each step of the solution
+        and save them to a gif file
+        """
+
+
+        self.shuffle_tiles()
+        path = runSearchAlgorithms(BFS, self.tiles)
+        # create a list to store the images
+        self.images = []
+        for tile in path:
+            index = self.tiles.index(str(tile))
+            self.move_tile(index)
+            self.master.update()
+            self.images.append(ImageGrab.grab(bbox=(self.master.winfo_rootx(), self.master.winfo_rooty(), self.master.winfo_rootx() + self.master.winfo_width(), self.master.winfo_rooty() + self.master.winfo_height())))
+            self.master.after(500)
+        # save the images to a gif file
+        self.images[0].save('solution.gif', save_all=True, append_images=self.images[1:], loop=0, duration=500)
+
+
+
+
+
 
 
 root = tk.Tk()
