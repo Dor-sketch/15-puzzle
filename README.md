@@ -2,15 +2,11 @@
 
 This project is a comprehensive exploration of AI search algorithms, using the `8-Puzzle` problem as a case study. The program includes implementations of the `BFS`, `IDDFS`, `GBFS`, and `A*` search algorithms, and a custom heuristic for `A*` and `GBFS`. The program was initially developed for the **20551 Introduction to Artificial Intelligence** course at the *Open University  of Israel*, and earned a perfect score.
 
-
-
 <p align="center">
   <img src="/images/cpp_gui.png" title="AI8Puzzle" width="400">
   <br>
   <i>AI8Puzzle GTK GUI (C++) - Coming Soon</i>
 </p>
-
-
 
 ---
 
