@@ -1,61 +1,46 @@
 /* Vibrant dark theme for the window */
 body {
+    background-color: #222;
     font-family: Arial, sans-serif;
-    color: #636363;
-    background-color: #def;
-        background-image: radial-gradient(closest-side, transparent 98%, rgba(0, 0, 0, .3) 99%),
-            radial-gradient(closest-side, transparent 98%, rgba(0, 0, 0, .3) 99%);
-        background-size: 80px 80px;
-        background-position: 0 0, 40px 40px;
+    color: #fff;
 }
 
 
 /* Vibrant dark theme for the button when it is hovered */
 button:hover {
     background: linear-gradient(to right, #ff00cc, #3333ff);
-    background-color: #def;
-        background-image: radial-gradient(closest-side, transparent 98%, rgba(0, 0, 0, .3) 99%),
-            radial-gradient(closest-side, transparent 98%, rgba(0, 0, 0, .3) 99%);
-        background-size: 80px 80px;
-        background-position: 0 0, 40px 40px;
+    /* background-clip: text; */
+    /* -webkit-background-clip: text; */
+    /* color: transparent; */
     animation: glow 1s ease-in-out infinite alternate;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.6), inset 0 0 5px rgba(59, 148, 102, 0.6), inset 0 0 10px rgba(0, 0, 0, 0.6);
 }
 
 /* Vibrant dark theme for the button when it is active */
 button:active {
-    background-color: #def;
-        background-image: radial-gradient(closest-side, transparent 98%, rgba(0, 0, 0, .3) 99%),
-            radial-gradient(closest-side, transparent 98%, rgba(0, 0, 0, .3) 99%);
-        background-size: 80px 80px;
-        background-position: 0 0, 40px 40px;
+    /* background: linear-gradient(to bottom, #555, #222); */
+    /* box-shadow: 0 2px 5px rgba(0, 0, 0, 0.6); */
 }
 
 /* Vibrant dark theme for the button when it is focused */
 button:focus {
-    background-color: #def;
-        background-image: radial-gradient(closest-side, transparent 98%, rgba(0, 0, 0, .3) 99%),
-            radial-gradient(closest-side, transparent 98%, rgba(0, 0, 0, .3) 99%);
-        background-size: 80px 80px;
-        background-position: 0 0, 40px 40px;
+    /* outline: none; */
 }
 
 /* Vibrant dark theme for the button when it is disabled */
 button:disabled {
-    background-color: #def;
-        background-image: radial-gradient(closest-side, transparent 98%, rgba(0, 0, 0, .3) 99%),
-            radial-gradient(closest-side, transparent 98%, rgba(0, 0, 0, .3) 99%);
-        background-size: 80px 80px;
-        background-position: 0 0, 40px 40px;
+    /* background: linear-gradient(to bottom, #444, #222); */
+    /* color: #666; */
 }
 
 /* Vibrant dark theme for the button */
 GtkButton {
-    background-color: #def;
-        background-image: radial-gradient(closest-side, transparent 98%, rgba(0, 0, 0, .3) 99%),
-            radial-gradient(closest-side, transparent 98%, rgba(0, 0, 0, .3) 99%);
-        background-size: 80px 80px;
-        background-position: 0 0, 40px 40px;
+    /* background: linear-gradient(to bottom, #888, #555); */
+    /* color: #fff; */
+    /* font-size: xx-large; */
+    /* border-radius: 5px; */
+    /* box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6); */
+    /* text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.5), 1px 1px 1px rgba(255, 255, 255, 0.3); */
 }
 
 .puzzle-piece {
@@ -73,9 +58,11 @@ GtkButton {
     0% {
         box-shadow: 0 0 5px #baffac, 0 0 10px #baffac, 0 0 15px #baffac, 0 0 20px #baffac;
     }
+
     50% {
         box-shadow: 0 0 10px #80ff80, 0 0 20px #80ff80, 0 0 30px #80ff80, 0 0 40px #80ff80;
     }
+
     100% {
         box-shadow: 0 0 15px #00ff00, 0 0 30px #00ff00, 0 0 45px #00ff00, 0 0 60px #00ff00;
     }
@@ -119,13 +106,16 @@ GtkButton {
     0% {
         background: radial-gradient(circle at center, #9cff57, #1e5631);
     }
+
     50% {
         background: radial-gradient(circle at center, #67ff33, #1e5631);
     }
+
     100% {
         background: radial-gradient(circle at center, #9cff57, #1e5631);
     }
 }
+
 @keyframes bg_change {
     0% {
         background: linear-gradient(to bottom, #1e5631, #152422);

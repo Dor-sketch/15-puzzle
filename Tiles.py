@@ -530,6 +530,20 @@ def runSearchAlgorithms(algorithm, tiles: List[str]):
     soulution = algorithm(initial_state).search()
     return soulution.get_path()
 
+
+def solvePuzzle(tiles: List[str]):
+    """
+    Run the search algorithms and return the results
+    """
+    print(tiles)
+    initial_state = State(tiles)
+    print(initial_state)
+    path = BFS(initial_state).search().get_path()
+    print(str(path))
+    # return without the brackets
+    return str(path)
+
+
 def main():
     """
     parse input and run algorithms
