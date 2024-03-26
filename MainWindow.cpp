@@ -135,23 +135,24 @@ resetButton.signal_clicked().connect([this] {
   movesLabel.set_text("Moves: 0");
   box.pack_start(movesLabel, Gtk::PACK_SHRINK);
   // attack to grid top row
-    grid.attach(box, 0, 0, 3, 1);
+    // grid.attach(box, 0, 0, 3, 1);
 }
 
 MainWindow::MainWindow() {
-    set_default_size(800, 1000);
-    set_title("8-Puzzle Game");
-    grid.set_row_homogeneous(true);
-    grid.set_column_homogeneous(true);
+  fallingCharsWidgets.resize(9);
+   set_default_size(800, 1000);
+  set_title("8-Puzzle Game");
+  grid.set_row_homogeneous(true);
+  grid.set_column_homogeneous(true);
 
-    initControls();
-    initButtons();
+  initControls();
+  initButtons();
 
-    add(grid);
+  add(grid);
 
-    game.shuffle();
-    updateBoard();
-    show_all_children();
+  game.shuffle();
+  updateBoard();
+  show_all_children();
 }
 void MainWindow::addButton(int i) {
     buttons[i].set_size_request(100, 100);

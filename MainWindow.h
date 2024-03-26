@@ -46,8 +46,8 @@ public:
   MainWindow();
 
 private:
-  FallingCharsWidget fallingCharsWidget;
-  std::array<Gtk::Overlay, 9> overlays; // Add this line
+  std::vector<FallingCharsWidget> fallingCharsWidgets;
+   std::array<Gtk::Overlay, 9> overlays; // Add this line
 
   std::vector<int> moves;
   void processNextMove();
