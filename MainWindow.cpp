@@ -4,30 +4,16 @@
 #include <gtk/gtk.h>
 #include <gtkmm.h>
 #include <thread>
+#include <random>
+#include <ctime>
+
+char MainWindow::randomCharacter() {
+    static std::mt19937 generator(time(0)); // Mersenne twister random number generator
+    std::uniform_int_distribution<int> distribution('A', 'Z'); // distribution in range ['A', 'Z']
+    return static_cast<char>(distribution(generator));
+}
 
 extern const std::string solve(const std::array<int, 9>& board);
-
-void MainWindow::addButton(int i) {
-    buttons[i].get_style_context()->add_class("puzzle-piece");
-    buttons[i].set_label(std::to_string(game[i]));
-    // attach to grid - from 2nd row
-    grid.attach(buttons[i], i % 3, i / 3 + 1, 1, 1);
-    buttons[i].signal_clicked().connect([this, i] {
-        game.move(i);
-        updateBoard();
-    });
-
-    // Add hover signals
-    buttons[i].signal_enter_notify_event().connect([this](GdkEventCrossing*) {
-        buttons[0].get_style_context()->add_class("hovered");
-        return false;
-    });
-
-    buttons[i].signal_leave_notify_event().connect([this](GdkEventCrossing*) {
-        buttons[0].get_style_context()->remove_class("hovered");
-        return false;
-    });
-}
 
 void MainWindow::initButtons() {
   for (int i = 0; i < 9; ++i) {
@@ -152,33 +138,68 @@ resetButton.signal_clicked().connect([this] {
     grid.attach(box, 0, 0, 3, 1);
 }
 
-
 MainWindow::MainWindow() {
     set_default_size(800, 1000);
     set_title("8-Puzzle Game");
     grid.set_row_homogeneous(true);
     grid.set_column_homogeneous(true);
-    add(grid);
+
     initControls();
     initButtons();
 
+    add(grid);
 
     game.shuffle();
     updateBoard();
     show_all_children();
 }
+void MainWindow::addButton(int i) {
+    buttons[i].set_size_request(100, 100);
+    buttons[i].get_style_context()->add_class("tile");
+    buttons[i].get_style_context()->add_class("puzzle-piece");
+    buttons[i].set_label(std::to_string(game[i]));
+
+    overlays[i].add_overlay(fallingCharsWidgets[i]); // Add the matrix effect to the overlay
+    overlays[i].add_overlay(buttons[i]); // Add the button to the overlay
+
+    // attach to grid - from 2nd row
+    grid.attach(overlays[i], i % 3, i / 3 + 1, 1, 1);
+    buttons[i].signal_clicked().connect([this, i] {
+        game.move(i);
+        updateBoard();
+    });
+
+    // Add hover signals
+    buttons[i].signal_enter_notify_event().connect([this](GdkEventCrossing *) {
+        buttons[0].get_style_context()->add_class("hovered");
+        return false;
+    });
+
+    buttons[i].signal_leave_notify_event().connect([this](GdkEventCrossing *) {
+        buttons[0].get_style_context()->remove_class("hovered");
+        return false;
+    });
+}
 
 void MainWindow::updateBoard() {
-std::cout<< "updateBoard" << std::endl;
-    int blank = 0;
-  for (int i = 0; i < 9; ++i) {
-    if (game[i] != 0) {
-      buttons[i].set_label(std::to_string(game[i]));
-      buttons[i].get_style_context()->remove_class("tile-0");
-    } else {
-        blank = i;
-    }
-  }
-  buttons[blank].set_label("");
-  buttons[blank].get_style_context()->add_class("tile-0");
+        std::cout<< "updateBoard" << std::endl;
+        int blank = 0;
+        for (int i = 0; i < 9; ++i) {
+                if (game[i] != 0) {
+                        buttons[i].set_label(std::to_string(game[i]));
+                        buttons[i].get_style_context()->remove_class("tile-0");
+                        fallingCharsWidgets[i].hide(); // Hide the matrix effect for non-blank tiles
+                } else {
+                        blank = i;
+                }
+        }
+        buttons[blank].set_label("");
+        buttons[blank].get_style_context()->add_class("tile-0");
+        fallingCharsWidgets[blank].show(); // Show the matrix effect for the blank tile
+
+        // Start a timer to change the label of the blank tile every 100 milliseconds
+        Glib::signal_timeout().connect([this, blank] {
+                buttons[blank].set_label(std::string(1, randomCharacter()));
+                return true; // return true to keep the timer running
+        }, 100);
 }

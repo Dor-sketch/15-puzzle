@@ -1,7 +1,7 @@
 window {
-background-color: #def;
-    background-image: radial-gradient(closest-side, transparent 98%, rgba(0, 0, 0, .3) 99%),
-        radial-gradient(closest-side, transparent 98%, rgba(0, 0, 0, .3) 99%);
+background-color: rgb(33, 33, 33);
+    background-image: radial-gradient(closest-side, transparent 98%, rgba(0, 0, 0, 0.3) 99%),
+        radial-gradient(closest-side, transparent 98%, rgba(42, 210, 123, 0.3) 99%);
     background-size: 80px 80px;
     background-position: 0 0, 40px 40px;
 }
@@ -40,32 +40,6 @@ background-color: #def;
 
 }
 
-/* Vibrant dark theme for the window */
-body {
-    font-family: Arial, sans-serif;
-    color: #636363;
-    background-color: black;
-        background-image:
-            radial-gradient(white, rgba(255, 255, 255, .2) 2px, transparent 40px),
-            radial-gradient(white, rgba(255, 255, 255, .15) 1px, transparent 30px),
-            radial-gradient(white, rgba(255, 255, 255, .1) 2px, transparent 40px),
-            radial-gradient(rgba(255, 255, 255, .4), rgba(255, 255, 255, .1) 2px, transparent 30px);
-        background-size: 550px 550px, 350px 350px, 250px 250px, 150px 150px;
-        background-position: 0 0, 40px 60px, 130px 270px, 70px 100px;
-}
-
-
-/* Vibrant dark theme for the button when it is hovered */
-button:hover {
-
-    }
-
-/* Vibrant dark theme for the button when it is active */
-button:active {
-        background-color: transparent;
-        background-image: none;
-        box-shadow: none;
-}
 
 /* Vibrant dark theme for the button when it is focused */
 button:focus {
@@ -95,7 +69,7 @@ GtkButton {
 
     border: 1px solid #000000;
     border-radius: 5px;
-    font-size: 40px;
+    font-size: 50px;
     color: #9c7a5c;
     box-shadow:
         0 1px 1px rgba(0, 0, 0, 0.1),
@@ -160,14 +134,15 @@ background-image:
         box-shadow: 0 0 15px #105200, 0 0 30px #105100, 0 0 45px #030e00, 0 0 60px #000000;
     }
 }
-
+@keyframes matrix {
+    0% { background-position: 0 0; }
+    100% { background-position: 0 -1000px; }
+}
 
 .tile-0 {
-background-color: transparent;
-background-image: none;
-box-shadow: none;
-    animation: none;
-        border: none;
+    background: url('matrix.png') repeat;
+    color: #00ff00;
+    animation: matrix 2s linear infinite;
 }
 
 @keyframes pulse {
