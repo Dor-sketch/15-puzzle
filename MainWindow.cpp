@@ -8,14 +8,25 @@
 extern const std::string solve(const std::array<int, 9>& board);
 
 void MainWindow::addButton(int i) {
-  buttons[i].get_style_context()->add_class("puzzle-piece");
-  buttons[i].set_label(std::to_string(game[i]));
-  // attach to grid - from 2nd row
-  grid.attach(buttons[i], i % 3, i / 3 + 1, 1, 1);
-  buttons[i].signal_clicked().connect([this, i] {
-    game.move(i);
-    updateBoard();
-  });
+    buttons[i].get_style_context()->add_class("puzzle-piece");
+    buttons[i].set_label(std::to_string(game[i]));
+    // attach to grid - from 2nd row
+    grid.attach(buttons[i], i % 3, i / 3 + 1, 1, 1);
+    buttons[i].signal_clicked().connect([this, i] {
+        game.move(i);
+        updateBoard();
+    });
+
+    // Add hover signals
+    buttons[i].signal_enter_notify_event().connect([this](GdkEventCrossing*) {
+        buttons[0].get_style_context()->add_class("hovered");
+        return false;
+    });
+
+    buttons[i].signal_leave_notify_event().connect([this](GdkEventCrossing*) {
+        buttons[0].get_style_context()->remove_class("hovered");
+        return false;
+    });
 }
 
 void MainWindow::initButtons() {
@@ -143,7 +154,7 @@ resetButton.signal_clicked().connect([this] {
 
 
 MainWindow::MainWindow() {
-    set_default_size(400, 400);
+    set_default_size(800, 1000);
     set_title("8-Puzzle Game");
     grid.set_row_homogeneous(true);
     grid.set_column_homogeneous(true);

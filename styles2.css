@@ -100,6 +100,13 @@ GtkButton {
     animation: pulse 2s infinite;
 }
 
+.tile-0:hover {
+    background: radial-gradient(circle at center, #9cff57, #1e5631);
+    border: none;
+    border-radius: 0%;
+    animation: pulse 2s infinite;
+}
+
 
 
 @keyframes pulse {
