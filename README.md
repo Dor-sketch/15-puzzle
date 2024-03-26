@@ -3,11 +3,16 @@
 This project is a comprehensive exploration of AI search algorithms, using the `8-Puzzle` problem as a case study. The program includes implementations of the `BFS`, `IDDFS`, `GBFS`, and `A*` search algorithms, and a custom heuristic for `A*` and `GBFS`. The program was initially developed for the **20551 Introduction to Artificial Intelligence** course at the *Open University  of Israel*, and earned a perfect score.
 
 <p align="center">
-  <img src="/images/solution_7_moves_white.gif" title="AI8Puzzle" width="240">
+  <img src="/images/cpp_gui.png" title="AI8Puzzle" width="240">
+  <br>
+  <i>AI8Puzzle GTK GUI (C++) - Coming Soon</i>
 </p>
+![alt text](image.png)
 
+![alt text](image.png)
 ---
 
+- [](#)
 - [🚀 Running the Program](#-running-the-program)
 - [🌍 About the 8-Puzzle Problem](#-about-the-8-puzzle-problem)
   - [📐 States](#-states)
@@ -26,6 +31,11 @@ This project is a comprehensive exploration of AI search algorithms, using the `
 ---
 
 ## 🚀 Running the Program
+
+<p align="center">
+  <img src="/images/solution_7_moves_white.gif" title="AI8Puzzle" width="240">
+</p>
+![alt text](image.png)
 
 The program supports both interactive GUI and command-line interfaces. The GUI is built using the `tkinter` library, and the command-line interface is implemented by parsing the command-line arguments in `main`.
 

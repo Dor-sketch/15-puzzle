@@ -4,6 +4,14 @@ from tester import PuzzleTester
 from Tiles import BFS, IDDFS, GBFS, AStar, TARGET_A, TARGET_B, PriorityQueueNode, Node, runSearchAlgorithms
 from PIL import Image, ImageSequence, ImageGrab
 
+
+def on_press(event, button, color):
+    button.configure(background=color)
+
+
+def on_release(event, button, color):
+    button.configure(background=color)
+
 class EightPuzzleGUI:
     def __init__(self, master):
         self.master = master
@@ -15,12 +23,28 @@ class EightPuzzleGUI:
         # Create a frame to hold the buttons
         button_frame = tk.Frame(self.master)
         button_frame.pack(fill=tk.BOTH, expand=True)
+        def on_press(event, button, color):
+            button.configure(background=color)
+
+        def on_release(event, button, color):
+            button.configure(background=color)
 
         # Create buttons for each algorithm
         self.gbfs_button = Button(button_frame, text="Run GBFS", command=self.run_gbfs, font=("Helvetica", 14), bg='lightblue', activebackground='lightgreen', bd=3, relief='ridge')
+        self.gbfs_button.bind("<ButtonPress-1>", lambda event: on_press(event, self.gbfs_button, 'darkblue'))
+        self.gbfs_button.bind("<ButtonRelease-1>", lambda event: on_release(event, self.gbfs_button, 'lightblue'))
+
         self.astar_button = Button(button_frame, text="Run A*", command=self.run_astar, font=("Helvetica", 14), bg='lightblue', activebackground='lightgreen', bd=3, relief='ridge')
-        self.iddfs_button = Button(button_frame, text="Run IDDFS", command=self.run_iddfs, font=("Helvetica", 14), bg='lightblue', activebackground='lightgreen', bd=3, relief='ridge', background='lightblue', activeforeground='lightgreen', fg='black')
-        self.generate_GIF_button = Button(button_frame, text="Generate GIF", command=self.generate_GIF, font=("Helvetica", 14), bg='lightblue', activebackground='lightgreen', bd=3, relief='ridge', background='lightblue', activeforeground='lightgreen', fg='black')
+        self.astar_button.bind("<ButtonPress-1>", lambda event: on_press(event, self.astar_button, 'darkblue'))
+        self.astar_button.bind("<ButtonRelease-1>", lambda event: on_release(event, self.astar_button, 'lightblue'))
+
+        self.iddfs_button = Button(button_frame, text="Run IDDFS", command=self.run_iddfs, font=("Helvetica", 14), bg='lightblue', activebackground='lightgreen', bd=3, relief='ridge')
+        self.iddfs_button.bind("<ButtonPress-1>", lambda event: on_press(event, self.iddfs_button, 'darkblue'))
+        self.iddfs_button.bind("<ButtonRelease-1>", lambda event: on_release(event, self.iddfs_button, 'lightblue'))
+
+        self.generate_GIF_button = Button(button_frame, text="Generate GIF", command=self.generate_GIF, font=("Helvetica", 14), bg='lightblue', activebackground='lightgreen', bd=3, relief='ridge')
+        self.generate_GIF_button.bind("<ButtonPress-1>", lambda event: on_press(event, self.generate_GIF_button, 'darkblue'))
+        self.generate_GIF_button.bind("<ButtonRelease-1>", lambda event: on_release(event, self.generate_GIF_button, 'lightblue'))
 
         # Grid the buttons onto the screen
         self.gbfs_button.grid(row=0, column=0, sticky='nsew')

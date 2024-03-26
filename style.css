@@ -1,0 +1,55 @@
+/* Vibrant dark theme for the window */
+body {
+    background-color: #222;
+    font-family: Arial, sans-serif;
+    color: #fff;
+}
+
+
+
+/* Vibrant dark theme for the button when it is hovered */
+button:hover {
+    background: linear-gradient(to bottom, #aaa, #777);
+}
+
+/* Vibrant dark theme for the button when it is active */
+button:active {
+    background: linear-gradient(to bottom, #555, #222);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.6);
+}
+
+/* Vibrant dark theme for the button when it is focused */
+button:focus {
+    outline: none;
+}
+
+/* Vibrant dark theme for the button when it is disabled */
+button:disabled {
+    background: linear-gradient(to bottom, #444, #222);
+    color: #666;
+}
+
+/* Vibrant dark theme for the button */
+GtkButton {
+    background: linear-gradient(to bottom, #888, #555);
+    color: #fff;
+    font-size: xx-large;
+    border-radius: 5px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6);
+    text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.5), 1px 1px 1px rgba(255, 255, 255, 0.3);
+}
+
+.puzzle-piece {
+    background: linear-gradient(to bottom, #888, #555);
+    border: 1px solid #333;
+    border-radius: 5px;
+    font-size: xx-large;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6), inset 0 0 5px rgba(0, 0, 0, 0.6), inset 0 0 10px rgba(0, 0, 0, 0.6);
+    text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.5), 1px 1px 1px rgba(255, 255, 255, 0.3);
+}
+
+.tile-0 {
+    background: none;
+    border: none;
+    box-shadow: none;
+}
