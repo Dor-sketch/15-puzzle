@@ -18,7 +18,7 @@ Project `_Matrix` (Line-Matrix) is a comprehensive exploration of AI search algo
   - [Goal States](#goal-states)
   - [Action cost](#action-cost)
 - [Running the Program](#running-the-program)
-- [Techniqul Details](#techniqul-details)
+- [Technical Details](#technical-details)
   - [Node Class](#node-class)
   - [Search Data Structures](#search-data-structures)
   - [Custom A\* and GBFS Heuristics](#custom-a-and-gbfs-heuristics)
@@ -206,7 +206,7 @@ You can also use this simple tester program, which leverages the modular design 
 
 ---
 
-## Techniqul Details
+## Technical Details
 
 ```python
 class SearchAlgorithm:
