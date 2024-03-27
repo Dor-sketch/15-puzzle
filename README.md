@@ -117,9 +117,8 @@ The `State` class also includes methods for generating children states, consider
 
 <p align="center">
 <img src="/images/reaching_goal.gif" title="AI8Puzzle" width="400">
-  <img src="/images/goal_state.png" title="AI8Puzzle" width="400">
   <br>
-    <i>Goal state of the 8-Puzzle, GUI with `cubes` theme</i>
+    <i>Path to goal state of the 8-Puzzle</i>
 </p>
 
 The problem includes two **goal states**, defined as plain `List[int]` to match the program `initial_state` input format.
@@ -138,26 +137,16 @@ Each action performed by `generate_children` above cost 1, so `1` is the **actio
 ## Running the Program
 
 <p align="center">
-  <img src="/images/neu_theme.jpg" title="AI8Puzzle" width="400">
-    <img src="/images/neu_theme2.png" title="AI8Puzzle" width="400">
     <img src="/images/reduced_mov.gif" title="AI8Puzzle" width="400">
+    <br>
+  <img src="/images/neu_theme.jpg" title="AI8Puzzle" width="400">
+  <br>
+    <img src="/images/neu_theme2.png" title="AI8Puzzle" width="400">
     <br>
         <i>`theMatrix` theme GUI</i>
 </p>
 
-<p align="center">
-  <img src="/images/elegant_theme.png" title="AI8Puzzle" width="600">
-    <br>
-        <i>`elegant` theme GUI</i>
-</p>
-
 The program supports both interactive GUI and command-line interfaces. Two GUI versions are available: one implemented in Python using the `tkinter` library, and another implemented in `C++` using the `GTK` library. The Python version is more easy to use and has more features, while the C++ version offer cool visual effects and supports `CSS` styling.
-
-<p align="center">
-  <img src="/images/css_examp.gif" title="AI8Puzzle" width="400">
-    <br>
-        <i>Example of CSS styling in the C++ GUI</i>
-</p>
 
 - To run the C++ GUI, first make sure you have `GTK` installed. Then navigate to the directory containing `AI8Puzzle` and execute the following command in the terminal:
 
@@ -165,7 +154,11 @@ The program supports both interactive GUI and command-line interfaces. Two GUI v
     ./make && ./main
     ```
 
-
+    <p align="center">
+      <img src="/images/elegant_theme.png" title="AI8Puzzle" width="400">
+        <br>
+            <i>`elegant` theme GUI</i>
+    </p>
 
     The program will open a window where you can interact with the puzzle. You can move the tiles by clicking on them, or use the keyboard arrow keys. You can also use the following shotcuts:
 
