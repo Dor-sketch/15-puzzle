@@ -9,8 +9,7 @@ FallingCharsWidget::FallingCharsWidget() {
       100); // Every 100 milliseconds
 }
 
-bool FallingCharsWidget::on_draw(
-    const Cairo::RefPtr<Cairo::Context> &cr)  {
+bool FallingCharsWidget::on_draw(const Cairo::RefPtr<Cairo::Context> &cr) {
   Gtk::Allocation allocation = get_allocation();
   const int width = allocation.get_width();
   const int height = allocation.get_height();

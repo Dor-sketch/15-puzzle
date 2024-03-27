@@ -3,7 +3,7 @@
 Project `_Matrix` (Line-Matrix) is a comprehensive exploration of AI search algorithms, using the `8-Puzzle` problem as a case study. The program includes implementations of famouse search algorithms, such as `BFS`, `IDDFS`, `GBFS`, and `A*` search algorithms, and a custom heuristic for `A*` and `GBFS`. The program was initially developed for the **20551 Introduction to Artificial Intelligence** course at the *Open University of Israel*, and earned a perfect score of `100/100`.
 
 <p align="center">
-  <img src="/images/reduced_mov.gif"
+  <img src="/images/usage_cubes.gif"
   title="AI8Puzzle" width="400">
   <br>
   <i>AI8Puzzle GTK GUI (C++)</i>
@@ -13,7 +13,7 @@ Project `_Matrix` (Line-Matrix) is a comprehensive exploration of AI search algo
 
 - [The 8-Puzzle Problem](#the-8-puzzle-problem)
   - [States](#states)
-  - [Initial Space](#initial-space)
+  - [Initial State](#initial-state)
   - [Actions and Transition Model](#actions-and-transition-model)
   - [Goal States](#goal-states)
   - [Action cost](#action-cost)
@@ -33,9 +33,9 @@ Project `_Matrix` (Line-Matrix) is a comprehensive exploration of AI search algo
 The 8-Puzzle broblem is a classic AI problem, where the goal is to move the tiles from the initial state to the target state, using the minimum number of moves. The puzzle consists of a 3x3 grid with 8 numbered tiles and one empty space. The tiles are initially arranged in a random order, and the goal is to arrange them in ascending order, with the empty space at the bottom right corner, or at the top left corner (see [wikipedia](https://en.wikipedia.org/wiki/15_puzzle)).
 
 <p align="center">
-  <img src="/images/clean.gif" title="AI8Puzzle" width="400">
+  <img src="/images/moving.gif" title="AI8Puzzle" width="400">
   <br>
-    <i>Example of 8-Puzzle: Movinge tile `3` from the top left corner to its place</i>
+    <i>Example of 8-Puzzle: Movinge tile `1` from the top left corner, thand moving `4` to the middle</i>
 </p>
 
 In the following section I will describe the main components of the problem as a `search problem` in a more formal way, accoding to the book **"Artificial Intelligence: A Modern Approach"**, by *Stuart Russell and Peter Norvig*.
@@ -58,12 +58,13 @@ class State:
 
 The `State` class is responsible for representing **a state in the world**. A state, in this specific problem, is a configuration of the puzzle. Each puzzle configuration, converting a linear array of tiles into a 2D matrix. This design choice simplifies both the visualization of the puzzle state and the implementation of moves within the puzzle space.
 
-### Initial Space
+### Initial State
 
 <p align="center">
-  <img src="/images/goal_state.png" title="AI8Puzzle" width="400">
-  <br>
-    <i>Goal state of the 8-Puzzle, GUI with `cubes` theme</i>
+  <img src="/images/cubes_theme.png" title="AI8Puzzle" width="400">
+    <br>
+        <i>Example of shuffled 8-Puzzle, GUI with `cubes` theme</i>
+</p>
 
 ```python
 def main():
@@ -114,6 +115,13 @@ The `State` class also includes methods for generating children states, consider
 
 ### Goal States
 
+<p align="center">
+<img src="/images/reaching_goal.gif" title="AI8Puzzle" width="400">
+  <img src="/images/goal_state.png" title="AI8Puzzle" width="400">
+  <br>
+    <i>Goal state of the 8-Puzzle, GUI with `cubes` theme</i>
+</p>
+
 The problem includes two **goal states**, defined as plain `List[int]` to match the program `initial_state` input format.
 
 ```python
@@ -130,20 +138,26 @@ Each action performed by `generate_children` above cost 1, so `1` is the **actio
 ## Running the Program
 
 <p align="center">
-  <img src="/images/simple.png" title="AI8Puzzle" width="400">
-    <img src="/images/Ayn_Hara.png" title="AI8Puzzle" width="400">
+  <img src="/images/neu_theme.jpg" title="AI8Puzzle" width="400">
+    <img src="/images/neu_theme2.png" title="AI8Puzzle" width="400">
+    <img src="/images/reduced_mov.gif" title="AI8Puzzle" width="400">
     <br>
-        <i>Simple theme GUI (left) and Ayn Hara theme GUI (right)</i>
+        <i>`theMatrix` theme GUI</i>
 </p>
 
 <p align="center">
-  <img src="/images/neu_theme.jpg" title="AI8Puzzle" width="400">
-    <img src="/images/neu_theme2.png" title="AI8Puzzle" width="400">
+  <img src="/images/elegant_theme.png" title="AI8Puzzle" width="600">
     <br>
-        <i>Neu theme GUI (left) and White theme GUI (right)</i>
-
+        <i>`elegant` theme GUI</i>
+</p>
 
 The program supports both interactive GUI and command-line interfaces. Two GUI versions are available: one implemented in Python using the `tkinter` library, and another implemented in `C++` using the `GTK` library. The Python version is more easy to use and has more features, while the C++ version offer cool visual effects and supports `CSS` styling.
+
+<p align="center">
+  <img src="/images/css_examp.gif" title="AI8Puzzle" width="400">
+    <br>
+        <i>Example of CSS styling in the C++ GUI</i>
+</p>
 
 - To run the C++ GUI, first make sure you have `GTK` installed. Then navigate to the directory containing `AI8Puzzle` and execute the following command in the terminal:
 
@@ -151,11 +165,22 @@ The program supports both interactive GUI and command-line interfaces. Two GUI v
     ./make && ./main
     ```
 
-    The program will open a window where you can interact with the puzzle. You can move the tiles by clicking on them, and choose options from the menu bar (¿)
 
-    <p align="center">
-      <img src="/images/clean2.gif" title="AI8Puzzle" width="400">
+
+    The program will open a window where you can interact with the puzzle. You can move the tiles by clicking on them, or use the keyboard arrow keys. You can also use the following shotcuts:
+
+    - `ctrl + n` - generate a new random puzzle (shuffled)
+    - `ctrl + s` - solve the puzzle using the BFS algorithm
+    - `ctrl + r` - reset the puzzle (default goal state)
+    - `ctrl + q` - quit the program
+    - `ctrl + t` - choose new theme from `css` file
+
+    <p = align="center">
+      <img src="/images/menu.png" title="AI8Puzzle" >
+      <br>
+        <i>Menu (C++)</i>
     </p>
+
 
 - To run the python GUI, first make sure you have `tkinter` installed. Then navigate to the directory containing `Tiles.py` and execute the following command in the terminal:
 

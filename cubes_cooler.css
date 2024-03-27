@@ -1,0 +1,155 @@
+/* Cool dark theme for the window */
+window {
+    background-color: #446;
+    background-image: linear-gradient(30deg, #335 12%, transparent 12.5%, transparent 87%, #335 87.5%, #335),
+        linear-gradient(150deg, #335 12%, transparent 12.5%, transparent 87%, #335 87.5%, #335),
+        linear-gradient(30deg, #335 12%, transparent 12.5%, transparent 87%, #335 87.5%, #335),
+        linear-gradient(150deg, #335 12%, transparent 12.5%, transparent 87%, #335 87.5%, #335),
+        linear-gradient(60deg, #88a 25%, transparent 25.5%, transparent 75%, #88a 75%, #88a),
+        linear-gradient(60deg, #88a 25%, transparent 25.5%, transparent 75%, #88a 75%, #88a);
+    background-size: 80px 140px;
+    background-position: 0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px;
+    font-family: Arial, sans-serif;
+    color: #fff;
+}
+
+/* Cool dark theme for the button when it is hovered */
+button:hover {
+    border-radius: 5px;
+    animation: glow 2s infinite;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    text-shadow:
+        -1px -1px 1px rgba(0, 0, 0, 0.5),
+        1px 1px 1px rgba(255, 255, 255, 0.3);
+}
+
+.menu-bar {
+    background-color: #223;
+    color: #8c6a4c;
+    font-size: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5),
+        inset 0 0 10px rgba(0, 0, 0, 0.5),
+        inset 0 0 20px rgba(0, 0, 0, 0.5);
+    text-shadow:
+        0 0 2px #d2a38b,
+        0 0 3px #d2a38b,
+        0 0 4px #d2a38b,
+        0 0 6px #d2a38b,
+        0 0 8px #d2a38b,
+        0 0 10px #d2a38b;
+}
+
+.menu-bar:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5),
+        inset 0 0 10px rgba(0, 0, 0, 0.5),
+        inset 0 0 20px rgba(0, 0, 0, 0.5);
+    text-shadow:
+        0 0 2px #d2a38b,
+        0 0 3px #d2a38b,
+        0 0 4px #d2a38b,
+        0 0 6px #d2a38b,
+        0 0 8px #d2a38b,
+        0 0 10px #d2a38b;
+}
+
+.puzzle-piece {
+    font-family: Arial, sans-serif;
+    font-size: 80px;
+    text-shadow:
+        -1px -1px 1px rgba(0, 0, 0, 0.5),
+        1px 1px 1px rgba(255, 255, 255, 0.3),
+        0 0 5px rgba(255, 255, 255, 0.3),
+        0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+@keyframes glow {
+    0% {
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+
+    50% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    }
+
+    100% {
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+}
+
+/* Cool dark theme for the menu item */
+
+menuitem {
+    font-size: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5),
+        inset 0 0 10px rgba(0, 0, 0, 0.5),
+        inset 0 0 20px rgba(0, 0, 0, 0.5);
+    text-shadow:
+        0 0 2px #d2a38b,
+        0 0 3px #d2a38b,
+        0 0 4px #d2a38b,
+        0 0 6px #d2a38b,
+        0 0 8px #d2a38b,
+        0 0 10px #d2a38b;
+}
+
+/* Cool dark theme for the button when it is disabled */
+
+button:disabled {
+    background-color: #def;
+    background-image: radial-gradient(closest-side, transparent 98%, rgba(0, 0, 0, .3) 99%),
+        radial-gradient(closest-side, transparent 98%, rgba(0, 0, 0, .3) 99%);
+    background-size: 80px 80px;
+    background-position: 0 0, 40px 40px;
+}
+
+/* Cool dark theme for the button */
+
+GtkButton {
+    background-color: #def;
+    background-image: radial-gradient(closest-side, transparent 98%, rgba(0, 0, 0, .3) 99%),
+        radial-gradient(closest-side, transparent 98%, rgba(0, 0, 0, .3) 99%);
+    background-size: 80px 80px;
+    background-position: 0 0, 40px 40px;
+}
+
+.puzzle-piece {
+    border: 1px solid #000000;
+    border-radius: 5px;
+    font-size: 80px;
+    color: #9c7a5c;
+    box-shadow:
+        0 1px 1px rgba(0, 0, 0, 0.1),
+        0 2px 2px rgba(0, 0, 0, 0.2),
+        0 4px 4px rgba(0, 0, 0, 0.2),
+        0 8px 8px rgba(0, 0, 0, 0.2),
+        0 16px 16px rgba(0, 0, 0, 0.3),
+        inset 0 0 5px rgba(0, 0, 0, 0.6),
+        inset 0 0 10px rgba(0, 0, 0, 0.6);
+
+    text-shadow:
+        -1px -1px 1px rgba(0, 0, 0, 0.5),
+        1px 1px 1px rgba(255, 255, 255, 0.3);
+
+    background-image:
+        linear-gradient(90deg,
+            rgba(255, 255, 255, 0.1) 25%,
+            rgba(255, 255, 255, 0.5) 50%,
+            rgba(255, 255, 255, 0.1) 75%);
+    animation: gloss 60s linear infinite;
+}
+
+@keyframes gloss {
+    0% {
+        background-position: 1px;
+    }
+
+    100% {
+        background-position: 100px;
+    }
+}
+
+@keyframes shine {
+    0% {
+        background-position: -100px;
+    }
+}

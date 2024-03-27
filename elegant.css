@@ -1,0 +1,177 @@
+window {
+    background-color: #def;
+    background-image: radial-gradient(closest-side, transparent 98%, rgba(0, 0, 0, .3) 99%),
+        radial-gradient(closest-side, transparent 98%, rgba(0, 0, 0, .3) 99%);
+    background-size: 80px 80px;
+    background-position: 0 0, 40px 40px;
+}
+
+
+/* Vibrant dark theme for the window */
+body {
+    font-family: Arial, sans-serif;
+    color: #636363;
+    background-color: black;
+    background-image:
+        radial-gradient(white, rgba(255, 255, 255, .2) 2px, transparent 40px),
+        radial-gradient(white, rgba(255, 255, 255, .15) 1px, transparent 30px),
+        radial-gradient(white, rgba(255, 255, 255, .1) 2px, transparent 40px),
+        radial-gradient(rgba(255, 255, 255, .4), rgba(255, 255, 255, .1) 2px, transparent 30px);
+    background-size: 550px 550px, 350px 350px, 250px 250px, 150px 150px;
+    background-position: 0 0, 40px 60px, 130px 270px, 70px 100px;
+}
+
+menubar {
+    background-color: #333;
+    color: #9c7a5c;
+    font-size: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5), inset 0 0 10px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(0, 0, 0, 0.5);
+    text-shadow: 0 0 2px #e2b38b, 0 0 3px #e2b38b, 0 0 4px #e2b38b, 0 0 6px #e2b38b, 0 0 8px #e2b38b, 0 0
+        10px #e2b38b;
+}
+.menu-bar {
+    background-color: #333;
+    color: #9c7a5c;
+    font-size: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5), inset 0 0 10px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(0, 0, 0, 0.5);
+    text-shadow: 0 0 2px #e2b38b, 0 0 3px #e2b38b, 0 0 4px #e2b38b, 0 0 6px #e2b38b, 0 0 8px #e2b38b, 0 0
+        10px #e2b38b;
+}
+
+menuitem {
+    font-size: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5), inset 0 0 10px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(0, 0, 0, 0.5);
+    text-shadow: 0 0 2px #e2b38b, 0 0 3px #e2b38b, 0 0 4px #e2b38b, 0 0 6px #e2b38b, 0 0 8px #e2b38b, 0 0 10px #e2b38b;
+}
+
+/* Vibrant dark theme for the button when it is disabled */
+button:disabled {
+    background-color: #def;
+    background-image: radial-gradient(closest-side, transparent 98%, rgba(0, 0, 0, .3) 99%),
+        radial-gradient(closest-side, transparent 98%, rgba(0, 0, 0, .3) 99%);
+    background-size: 80px 80px;
+    background-position: 0 0, 40px 40px;
+}
+
+/* Vibrant dark theme for the button */
+GtkButton {
+    background-color: #def;
+    background-image: radial-gradient(closest-side, transparent 98%, rgba(0, 0, 0, .3) 99%),
+        radial-gradient(closest-side, transparent 98%, rgba(0, 0, 0, .3) 99%);
+    background-size: 80px 80px;
+    background-position: 0 0, 40px 40px;
+}
+
+.puzzle-piece {
+    border: 1px solid #000000;
+    border-radius: 5px;
+    font-size: 80px;
+    color: #9c7a5c;
+    box-shadow:
+        0 1px 1px rgba(0, 0, 0, 0.1),
+        0 2px 2px rgba(0, 0, 0, 0.2),
+        0 4px 4px rgba(0, 0, 0, 0.2),
+        0 8px 8px rgba(0, 0, 0, 0.2),
+        0 16px 16px rgba(0, 0, 0, 0.3),
+        inset 0 0 5px rgba(0, 0, 0, 0.6),
+        inset 0 0 10px rgba(0, 0, 0, 0.6);
+
+    text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.5), 1px 1px 1px rgba(255, 255, 255, 0.3);
+    background-image:
+        linear-gradient(90deg,
+            rgba(255, 255, 255, 0.1) 25%,
+            rgba(255, 255, 255, 0.5) 50%,
+            rgba(255, 255, 255, 0.1) 75%);
+    animation: gloss 60s linear infinite;
+}
+
+
+@keyframes gloss {
+    0% {
+        background-position: 1px;
+    }
+
+    100% {
+        background-position: 100px;
+    }
+
+}
+
+
+@keyframes shine {
+    0% {
+        background-position: -100px;
+    }
+
+    100% {
+        background-position: 100px;
+    }
+}
+
+
+
+/* Add a glow animation to the puzzle pieces */
+@keyframes glow {
+    0% {
+        box-shadow: 0 0 5px #add8e6, 0 0 10px #add8e6, 0 0 15px #add8e6, 0 0 20px #add8e6;
+    }
+
+    50% {
+        box-shadow: 0 0 10px #87cefa, 0 0 20px #87cefa, 0 0 30px #87cefa, 0 0 40px #87cefa;
+    }
+
+    100% {
+        box-shadow: 0 0 15px #0000ff, 0 0 30px #0000ff, 0 0 45px #0000ff, 0 0 60px #0000ff;
+    }
+}
+
+@keyframes blank_glow {
+    0% {
+        box-shadow: 0 0 5px #9cff57, 0 0 10px #bbff8b, 0 0 15px #9cff57, 0 0 20px #9cff57;
+    }
+
+    50% {
+        box-shadow: 0 0 10px #67ff33, 0 0 20px #67ff33, 0 0 30px #114600, 0 0 40px #0c2305;
+    }
+
+    100% {
+        box-shadow: 0 0 15px #105200, 0 0 30px #105100, 0 0 45px #030e00, 0 0 60px #000000;
+    }
+}
+
+
+@keyframes pulse {
+    0% {
+        background: radial-gradient(circle at center, #4682b4, #020232);
+    }
+
+    25% {
+        background: radial-gradient(circle at center, #b0c4de, #2e3842);
+    }
+
+    50% {
+        background: radial-gradient(circle at center, #778899, #2f4f4f);
+    }
+
+    75% {
+        background: radial-gradient(circle at center, #c0c0c0, #424242);
+    }
+
+    100% {
+        background: radial-gradient(circle at center, #4682b4, #000043);
+    }
+}
+
+@keyframes bg_change {
+    0% {
+        background: linear-gradient(to bottom, #1e5631, #152422);
+    }
+
+    50% {
+        background: linear-gradient(to bottom, #152422, #1e5631);
+    }
+
+    100% {
+        background: linear-gradient(to bottom, #1e5631, #152422);
+    }
+}

@@ -1,23 +1,19 @@
 #pragma once
 
-#include <algorithm>
 #include <array>
-#include <random>
 
 class Game {
 public:
   Game();
-  void shuffle();
-  bool isSolved() const;
   int operator[](int index) const { return board[index]; }
+  const std::array<int, 9> &getBoard() const { return board; }
+  bool isSolved() const;
+  void shuffle();
   void move(int index);
-    const std::string solve();
-    void quit();
-    void update();
-    void init();
-    void reset();
-    const std::array<int, 9>& getBoard() const { return board; }
+  void update();
+  void reset();
+  void quit();
+
 private:
-      // the solution path
   std::array<int, 9> board;
 };

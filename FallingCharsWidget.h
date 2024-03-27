@@ -1,10 +1,7 @@
 #pragma once
 
-# include <gtkmm.h>
-# include <random>
-# include <ctime>
 #include <gtk/gtk.h>
-
+#include <gtkmm.h>
 
 class FallingCharsWidget : public Gtk::DrawingArea {
 public:
