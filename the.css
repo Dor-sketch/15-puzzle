@@ -1,0 +1,162 @@
+window {
+background-color: #026873;
+    background-image: linear-gradient(90deg, rgba(255, 255, 255, .07) 50%, transparent 50%),
+        linear-gradient(90deg, rgba(255, 255, 255, .13) 50%, transparent 50%),
+        linear-gradient(90deg, transparent 50%, rgba(255, 255, 255, .17) 50%),
+        linear-gradient(90deg, transparent 50%, rgba(255, 255, 255, .19) 50%);
+    background-size: 13px, 29px, 37px, 53px;
+}
+
+/* style for menu bar */
+.menu-bar {
+    background-color: #ffffff;
+    color: #000000;
+    padding: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    border-bottom: 1px solid #444;
+}
+
+.puzzle-piece {
+    /* background-color: #026873;
+        background-image: linear-gradient(90deg, rgba(255, 255, 255, .07) 50%, transparent 50%),
+            linear-gradient(90deg, rgba(255, 255, 255, .13) 50%, transparent 50%),
+            linear-gradient(90deg, transparent 50%, rgba(255, 255, 255, .17) 50%),
+            linear-gradient(90deg, transparent 50%, rgba(255, 255, 255, .19) 50%); */
+        background-size: 13px, 29px, 37px, 53px;
+    color: #f2aa6b;
+    text-shadow:
+        -1px -1px 1px rgba(0, 0, 0, 0.5),
+        1px 1px 1px rgba(255, 255, 255, 0.3),
+        0 0 5px rgba(255, 255, 255, 0.3);
+    background-position: 0 0, 40px 60px, 130px 270px, 70px 100px;
+
+}
+
+
+/* Vibrant dark theme for the button when it is focused */
+button:focus {
+    background-color: transparent;
+    background-image: none;
+    box-shadow: none;
+}
+
+/* Vibrant dark theme for the button when it is disabled */
+button:disabled {
+    background-color: #def;
+    background-image: radial-gradient(closest-side, transparent 98%, rgba(0, 0, 0, .3) 99%),
+        radial-gradient(closest-side, transparent 98%, rgba(0, 0, 0, .3) 99%);
+    background-size: 80px 80px;
+    background-position: 0 0, 40px 40px;
+}
+
+/* Vibrant dark theme for the button */
+GtkButton {
+
+}
+
+
+@keyframes gloss {
+    0% {
+        background-position: 1px;
+    }
+
+    100% {
+        background-position: 100px;
+    }
+
+}
+
+
+@keyframes shine {
+    0% {
+        background-position: -100px;
+    }
+
+    100% {
+        background-position: 100px;
+    }
+}
+
+
+
+/* Add a glow animation to the puzzle pieces */
+@keyframes glow {
+    0% {
+        box-shadow: 0 0 5px #add8e6, 0 0 10px #add8e6, 0 0 15px #add8e6, 0 0 20px #add8e6;
+    }
+
+    50% {
+        box-shadow: 0 0 10px #87cefa, 0 0 20px #87cefa, 0 0 30px #87cefa, 0 0 40px #87cefa;
+    }
+
+    100% {
+        box-shadow: 0 0 15px #0000ff, 0 0 30px #0000ff, 0 0 45px #0000ff, 0 0 60px #0000ff;
+    }
+}
+
+@keyframes blank_glow {
+    0% {
+        box-shadow: 0 0 5px #9cff57, 0 0 10px #bbff8b, 0 0 15px #9cff57, 0 0 20px #9cff57;
+    }
+
+    50% {
+        box-shadow: 0 0 10px #67ff33, 0 0 20px #67ff33, 0 0 30px #114600, 0 0 40px #0c2305;
+    }
+
+    100% {
+        box-shadow: 0 0 15px #105200, 0 0 30px #105100, 0 0 45px #030e00, 0 0 60px #000000;
+    }
+}
+
+@keyframes matrix {
+    0% {
+        background-position: 0 0;
+    }
+
+    100% {
+        background-position: 0 -1000px;
+    }
+}
+
+.tile-0 {
+    background: url('matrix.png') repeat;
+    color: #00ff00;
+    animation: matrix 2s linear infinite;
+}
+
+@keyframes pulse {
+    0% {
+        background: radial-gradient(circle at center, #4682b4, #020232);
+    }
+
+    25% {
+        background: radial-gradient(circle at center, #b0c4de, #2e3842);
+    }
+
+    50% {
+        background: radial-gradient(circle at center, #778899, #2f4f4f);
+    }
+
+    75% {
+        background: radial-gradient(circle at center, #c0c0c0, #424242);
+    }
+
+    100% {
+        background: radial-gradient(circle at center, #4682b4, #000043);
+    }
+}
+
+@keyframes bg_change {
+    0% {
+        background: linear-gradient(to bottom, #1e5631, #152422);
+    }
+
+    50% {
+        background: linear-gradient(to bottom, #152422, #1e5631);
+    }
+
+    100% {
+        background: linear-gradient(to bottom, #1e5631, #152422);
+    }
+}

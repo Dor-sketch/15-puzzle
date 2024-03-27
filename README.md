@@ -1,50 +1,170 @@
-# 🧩 AI8Puzzle: A comprehensive exploration of AI search algorithms
+# 🕳️ _Matrix
 
-This project is a comprehensive exploration of AI search algorithms, using the `8-Puzzle` problem as a case study. The program includes implementations of the `BFS`, `IDDFS`, `GBFS`, and `A*` search algorithms, and a custom heuristic for `A*` and `GBFS`. The program was initially developed for the **20551 Introduction to Artificial Intelligence** course at the *Open University  of Israel*, and earned a perfect score.
+Project `_Matrix` (Line-Matrix) is a comprehensive exploration of AI search algorithms, using the `8-Puzzle` problem as a case study. The program includes implementations of famouse search algorithms, such as `BFS`, `IDDFS`, `GBFS`, and `A*` search algorithms, and a custom heuristic for `A*` and `GBFS`. The program was initially developed for the **20551 Introduction to Artificial Intelligence** course at the *Open University of Israel*, and earned a perfect score of `100/100`.
 
 <p align="center">
   <img src="/images/cpp_gui.png" title="AI8Puzzle" width="400">
   <br>
-  <i>AI8Puzzle GTK GUI (C++) - Coming Soon</i>
+  <i>AI8Puzzle GTK GUI (C++)</i>
 </p>
 
 ---
 
-- [🚀 Running the Program](#-running-the-program)
-- [🌍 About the 8-Puzzle Problem](#-about-the-8-puzzle-problem)
-  - [📐 States](#-states)
-  - [🚀 Initial Space](#-initial-space)
-  - [🔁 Actions and Transition Model](#-actions-and-transition-model)
-  - [🏁 Goal States](#-goal-states)
-  - [💸 Action cost](#-action-cost)
-- [🔍 Understanding the Search Algorithms](#-understanding-the-search-algorithms)
-  - [🟠 Node Class](#-node-class)
-  - [📊 Search Data Structures](#-search-data-structures)
-  - [🧠 Custom A\* and GBFS Heuristics](#-custom-a-and-gbfs-heuristics)
-  - [📝 Examples](#-examples)
-- [👍 Acknowledgments](#-acknowledgments)
-- [📜 License](#-license)
+- [The 8-Puzzle Problem](#the-8-puzzle-problem)
+  - [States](#states)
+  - [Initial Space](#initial-space)
+  - [Actions and Transition Model](#actions-and-transition-model)
+  - [Goal States](#goal-states)
+  - [Action cost](#action-cost)
+- [Running the Program](#running-the-program)
+- [Techniqul Details](#techniqul-details)
+  - [Node Class](#node-class)
+  - [Search Data Structures](#search-data-structures)
+  - [Custom A\* and GBFS Heuristics](#custom-a-and-gbfs-heuristics)
+  - [Examples](#examples)
+- [Acknowledgments](#acknowledgments)
+- [License](#license)
 
 ---
 
-## 🚀 Running the Program
+## The 8-Puzzle Problem
+
+The 8-Puzzle broblem is a classic AI problem, where the goal is to move the tiles from the initial state to the target state, using the minimum number of moves. The puzzle consists of a 3x3 grid with 8 numbered tiles and one empty space. The tiles are initially arranged in a random order, and the goal is to arrange them in ascending order, with the empty space at the bottom right corner, or at the top left corner (see [wikipedia](https://en.wikipedia.org/wiki/15_puzzle)).
 
 <p align="center">
-  <img src="/images/solution_7_moves_white.gif" title="AI8Puzzle" width="240">
+  <img src="/images/example.gif" title="AI8Puzzle" width="400">
+  <br>
+    <i>Example of 8-Puzzle: Movinge tile `3` from the top left corner to its place</i>
 </p>
-![alt text](image.png)
 
-The program supports both interactive GUI and command-line interfaces. The GUI is built using the `tkinter` library, and the command-line interface is implemented by parsing the command-line arguments in `main`.
+In the following section I will describe the main components of the problem as a `search problem` in a more formal way, accoding to the book **"Artificial Intelligence: A Modern Approach"**, by *Stuart Russell and Peter Norvig*.
+
+---
+
+### States
+
+```python
+class State:
+    def __init__(self, numbers: List[int], rows=3, cols=3):
+        #...
+        self.numbers = numbers
+        self.rows, self.cols = rows, cols
+        self.matrix = self._create_matrix(numbers, rows, cols)
+    # ...
+    def _create_matrix(self, numbers, rows, cols):
+        return [[numbers[i * cols + j] for j in range(cols)] for i in range(rows)]
+```
+
+The `State` class is responsible for representing **a state in the world**. A state, in this specific problem, is a configuration of the puzzle. Each puzzle configuration, converting a linear array of tiles into a 2D matrix. This design choice simplifies both the visualization of the puzzle state and the implementation of moves within the puzzle space.
+
+### Initial Space
+
+<p align="center">
+  <img src="/images/goal_state.png" title="AI8Puzzle" width="400">
+  <br>
+    <i>Goal state of the 8-Puzzle, GUI with `cubes` theme</i>
+
+```python
+def main():
+    try:
+        initial_numbers = [int(num) for num in sys.argv[3:]]
+        # main constructing the first state
+        initial_state = State(initial_numbers)
+    except ValueError:
+        print("All arguments must be integers.")
+        sys.exit(1)
+
+    print(BFS(initial_state))
+    print(IDDFS(initial_state))
+    print(GBFS(initial_state))
+    print(AStar(initial_state))
+```
+
+The **initial state**, the one without a `parent` attribute, is defined based on the user input and starts as the tree root. The `main` function is responsible for parsing and initiating the `initial_state` instance, then it prints the result.
+
+### Actions and Transition Model
+
+<p align="center">
+  <img src="/images/trans.png" title="AI8Puzzle" width="400">
+  <br>
+    <i>clicking the colored tiles will move them to the empty space</i>
+</p>
+
+```python
+# ...
+def generate_children(self):
+    blank_x, blank_y = self.find_number_in_matrix(0)
+    children = []
+    for dx, dy in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
+        x, y = blank_x + dx, blank_y + dy
+        if 0 <= x < self.rows and 0 <= y < self.cols:
+            new_numbers = self.numbers.copy()
+            blank_index, new_index = blank_x * self.cols \
+                + blank_y, x * self.cols + y
+            new_numbers[blank_index], new_numbers[new_index] =\
+                new_numbers[new_index], new_numbers[blank_index]
+            children.append(State(new_numbers))
+    return children
+```
+
+The **actions** and **transition mosdel** as  implemented inside the `state` class `generate_children`.
+
+The `State` class also includes methods for generating children states, considering possible moves from the current state. This method implements the **Actions** and the **transition model**. I chose to implement them inside the `State` class to keep the idea of separated responsibility. That way, the `SearchAlgorithm` are only navigating the designed state space.
+
+### Goal States
+
+The problem includes two **goal states**, defined as plain `List[int]` to match the program `initial_state` input format.
+
+```python
+TARGET_A = [0, 1, 2, 3, 4, 5, 6, 7, 8]
+TARGET_B = [1, 2, 3, 4, 5, 6, 7, 8, 0]
+```
+
+### Action cost
+
+Each action performed by `generate_children` above cost 1, so `1` is the **action cost** of the problem. The `cost` is managed in the `Node` class which will be described below.
+
+---
+
+## Running the Program
+
+<p align="center">
+  <img src="/images/simple.png" title="AI8Puzzle" width="400">
+    <img src="/images/Ayn_Hara.png" title="AI8Puzzle" width="400">
+    <br>
+        <i>Simple theme GUI (left) and Ayn Hara theme GUI (right)</i>
+    <br>
+    <img src="/images/neu_theme.jpg" title="AI8Puzzle" width="400">
+    <br>
+        <i>Neu theme GUI</i>
+</p>
 
 
-- To run the GUI, first make sure you have `tkinter` installed. Then navigate to the directory containing `Tiles.py` and execute the following command in the terminal:
+
+The program supports both interactive GUI and command-line interfaces. Two GUI versions are available: one implemented in Python using the `tkinter` library, and another implemented in `C++` using the `GTK` library. The Python version is more easy to use and has more features, while the C++ version offer cool visual effects and supports `CSS` styling.
+
+- To run the C++ GUI, first make sure you have `GTK` installed. Then navigate to the directory containing `AI8Puzzle` and execute the following command in the terminal:
+
+    ```bash
+    ./make && ./main
+    ```
+
+    The program will open a window where you can interact with the puzzle. You can move the tiles by clicking on them, and choose options from the menu bar (¿)
+
+    <p align="center">
+      <img src="/images/clean2.gif" title="AI8Puzzle" width="400">
+    </p>
+
+- To run the python GUI, first make sure you have `tkinter` installed. Then navigate to the directory containing `Tiles.py` and execute the following command in the terminal:
 
     ```bash
     python3 GUI.py
     ```
 
-<p align="center">
-  <img src="/images/GUI.png" title="AI8Puzzle" width="300">
+    <p align="center">
+      <img src="/images/solution_7_moves_white.gif" title="AI8Puzzle" width="240">
+      <img src="/images/solution_7_moves.gif" title="AI8Puzzle" width="240">
+    </p>
 
 </p>
 
@@ -66,87 +186,7 @@ You can also use this simple tester program, which leverages the modular design 
 
 ---
 
-## 🌍 About the 8-Puzzle Problem
-
-The 8-Puzzle broblem is a classic AI problem, where the goal is to move the tiles from the initial state to the target state, using the minimum number of moves. The puzzle consists of a 3x3 grid with 8 numbered tiles and one empty space. The tiles are initially arranged in a random order, and the goal is to arrange them in ascending order, with the empty space at the bottom right corner, or at the top left corner.
-
-In the following section I will describe the main components of the problem as a `search problem` in a more formal way, accoding to the book **"Artificial Intelligence: A Modern Approach"**, by *Stuart Russell and Peter Norvig*.
-
----
-
-### 📐 States
-
-```python
-class State:
-    def __init__(self, numbers: List[int], rows=3, cols=3):
-        #...
-        self.numbers = numbers
-        self.rows, self.cols = rows, cols
-        self.matrix = self._create_matrix(numbers, rows, cols)
-    # ...
-    def _create_matrix(self, numbers, rows, cols):
-        return [[numbers[i * cols + j] for j in range(cols)] for i in range(rows)]
-```
-
-The `State` class is responsible for representing **a state in the world**. A state, in this specific problem, is a configuration of the puzzle. Each puzzle configuration, converting a linear array of tiles into a 2D matrix. This design choice simplifies both the visualization of the puzzle state and the implementation of moves within the puzzle space.
-
-### 🚀 Initial Space
-
-```python
-def main():
-    try:
-        initial_numbers = [int(num) for num in sys.argv[3:]]
-        # main constructing the first state
-        initial_state = State(initial_numbers)
-    except ValueError:
-        print("All arguments must be integers.")
-        sys.exit(1)
-
-    print(BFS(initial_state))
-    print(IDDFS(initial_state))
-    print(GBFS(initial_state))
-    print(AStar(initial_state))
-```
-
-The **initial state**, the one without a `parent` attribute, is defined based on the user input and starts as the tree root. The `main` function is responsible for parsing and initiating the `initial_state` instance, then it prints the result.
-
-### 🔁 Actions and Transition Model
-
-```python
-    # ...
-    def generate_children(self):
-        blank_x, blank_y = self.find_number_in_matrix(0)
-        children = []
-        for dx, dy in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
-            x, y = blank_x + dx, blank_y + dy
-            if 0 <= x < self.rows and 0 <= y < self.cols:
-                new_numbers = self.numbers.copy()
-                blank_index, new_index = blank_x * self.cols + blank_y, x * self.cols + y
-                new_numbers[blank_index], new_numbers[new_index] = new_numbers[new_index], new_numbers[blank_index]
-                children.append(State(new_numbers))
-        return children
-```
-
-The **actions** and **transition mosdel** as  implemented inside the `state` class `generate_children`.
-
-The `State` class also includes methods for generating children states, considering possible moves from the current state. This method implements the **Actions** and the **transition model**. I chose to implement them inside the `State` class to keep the idea of separated responsibility. That way, the `SearchAlgorithm` are only navigating the designed state space.
-
-### 🏁 Goal States
-
-The problem includes two **goal states**, defined as plain `List[int]` to match the program `initial_state` input format.
-
-```python
-TARGET_A = [0, 1, 2, 3, 4, 5, 6, 7, 8]
-TARGET_B = [1, 2, 3, 4, 5, 6, 7, 8, 0]
-```
-
-### 💸 Action cost
-
-Each action performed by `generate_children` above cost 1, so `1` is the **action cost** of the problem. The `cost` is managed in the `Node` class which will be described below.
-
----
-
-## 🔍 Understanding the Search Algorithms
+## Techniqul Details
 
 ```python
 class SearchAlgorithm:
@@ -172,7 +212,7 @@ For a self-exercise in python OOP programming, the search algorithms were design
 
 ---
 
-### 🟠 Node Class
+### Node Class
 
 The node class is responsible for representing a **node in the search tree**. The program uses 2 types of nodes: a base `Node` class and a derived `PriorityQueueNode` class.
 
@@ -193,7 +233,7 @@ Note that other methods, such as `back_track_h` and `check_h` allow for testing 
 
 ---
 
-### 📊 Search Data Structures
+### Search Data Structures
 
 The **Frontier Class** Acts as the fringe or the boundary between explored and unexplored states. It is a priority queue (minimum heap) in `A*` and `GBFS`, and a simple queue or stack in `BFS` and `IDDFS`, respectively. In `BFS` it's implemented as a FIFO queue, while in the `IDDFS` as a stack. In addition to its specific implementation, it is responsible for counting how many nodes expand using the `explored_count`.
 
@@ -247,7 +287,7 @@ class AStar(SearchAlgorithm):
 
 A\* frontier adds the `node.cost` to its prirrity, thus $f(n)=h(n)+g(n)$.
 
-### 🧠 Custom A* and GBFS Heuristics
+### Custom A* and GBFS Heuristics
 
 The program also includes custom heuristics for A* and GBFS. The heuristics are implemented as methods inside the `PriorityQueueNode` class, and are used to calculate the estimated cost from the current state to the target state. The heuristics are used to guide the search algorithms in finding the optimal path to the target state.
 
@@ -255,11 +295,7 @@ To develop a consistent and admissible heuristic that differs from the tradition
 
 For more information about the heuristics, see the `PriorityQueueNode` class in `Tiles.py`.
 
-### 📝 Examples
-
-<p align="center">
-  <img src="/images/solution_7_moves.gif" title="AI8Puzzle" width="240">
-</p>
+### Examples
 
 Input for 30 moves solvable puzzles generated by the 'PuzzleTester':
 
@@ -271,13 +307,13 @@ Input for 30 moves solvable puzzles generated by the 'PuzzleTester':
 
 ---
 
-## 👍 Acknowledgments
+## Acknowledgments
 
 - Inspired by the book **"Artificial Intelligence: A Modern Approach"** by *Stuart Russell and Peter Norvig*.
 - Thanks to the Open University of Israel for the opportunity to work on this project.
 
 ---
 
-## 📜 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

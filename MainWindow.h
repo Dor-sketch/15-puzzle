@@ -15,7 +15,7 @@ private:
    std::array<Gtk::Overlay, 9> overlays; // Add this line
    void initMenuBar();                   // Add this line
    Gtk::MenuBar menuBar;                 // Add this line
-
+  void onTheme();                       // Add this line
    std::vector<int> moves;
    void processNextMove();
    void processMove(int tile);

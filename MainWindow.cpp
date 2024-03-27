@@ -56,6 +56,10 @@ void MainWindow::initMenuBar() {
     quitItem->signal_activate().connect(sigc::mem_fun(*this, &MainWindow::onQuit));
     subMenu->append(*quitItem);
 
+    Gtk::MenuItem* solvedItem = Gtk::manage(new Gtk::MenuItem("Change Theme"));
+    solvedItem->signal_activate().connect(sigc::mem_fun(*this, &MainWindow::onTheme));
+    subMenu->append(*solvedItem);
+
     // Add the menu item to the menu bar
     menuBar.append(*menuItem);
 
@@ -65,6 +69,45 @@ void MainWindow::initMenuBar() {
     // add css class
     get_style_context()->add_class("menu-bar");
 }
+
+void MainWindow::onTheme() {
+    // change css file
+    // open file dialog to choose file
+    Gtk::FileChooserDialog dialog("Please choose a CSS file",
+                                  Gtk::FILE_CHOOSER_ACTION_OPEN);
+    dialog.add_button("_Cancel", Gtk::RESPONSE_CANCEL);
+    dialog.add_button("_Open", Gtk::RESPONSE_OK);
+
+    // Add filters, so that only certain file types can be selected:
+    auto filter_text = Gtk::FileFilter::create();
+    filter_text->set_name("CSS files");
+    filter_text->add_mime_type("text/css");
+    dialog.add_filter(filter_text);
+
+    // Show the dialog and wait for a user response:
+    int result = dialog.run();
+
+    // Handle the response:
+    switch (result) {
+        case (Gtk::RESPONSE_OK): {
+            std::string filename = dialog.get_filename();
+            auto css_provider = Gtk::CssProvider::create();
+            css_provider->load_from_path(filename);
+            Gtk::StyleContext::add_provider_for_screen(Gdk::Screen::get_default(), css_provider, GTK_STYLE_PROVIDER_PRIORITY_USER);
+            break;
+        }
+        case (Gtk::RESPONSE_CANCEL): {
+            std::cout << "Cancel clicked." << std::endl;
+            break;
+        }
+        default: {
+            std::cout << "Unexpected button clicked." << std::endl;
+            break;
+        }
+    }
+}
+
+
 void MainWindow::addButton(int i) {
   buttons[i].set_size_request(100, 100);
   buttons[i].get_style_context()->add_class("tile");
