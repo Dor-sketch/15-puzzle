@@ -33,7 +33,7 @@ Project `_Matrix` (Line-Matrix) is a comprehensive exploration of AI search algo
 The 8-Puzzle broblem is a classic AI problem, where the goal is to move the tiles from the initial state to the target state, using the minimum number of moves. The puzzle consists of a 3x3 grid with 8 numbered tiles and one empty space. The tiles are initially arranged in a random order, and the goal is to arrange them in ascending order, with the empty space at the bottom right corner, or at the top left corner (see [wikipedia](https://en.wikipedia.org/wiki/15_puzzle)).
 
 <p align="center">
-  <img src="/images/example.gif" title="AI8Puzzle" width="400">
+  <img src="/images/clean.gif" title="AI8Puzzle" width="400">
   <br>
     <i>Example of 8-Puzzle: Movinge tile `3` from the top left corner to its place</i>
 </p>
