@@ -3,7 +3,8 @@
 Project `_Matrix` (Line-Matrix) is a comprehensive exploration of AI search algorithms, using the `8-Puzzle` problem as a case study. The program includes implementations of famouse search algorithms, such as `BFS`, `IDDFS`, `GBFS`, and `A*` search algorithms, and a custom heuristic for `A*` and `GBFS`. The program was initially developed for the **20551 Introduction to Artificial Intelligence** course at the *Open University of Israel*, and earned a perfect score of `100/100`.
 
 <p align="center">
-  <img src="/images/cpp_gui.png" title="AI8Puzzle" width="400">
+  <img src="/images/reduced_mov.gif"
+  title="AI8Puzzle" width="400">
   <br>
   <i>AI8Puzzle GTK GUI (C++)</i>
 </p>
@@ -133,12 +134,13 @@ Each action performed by `generate_children` above cost 1, so `1` is the **actio
     <img src="/images/Ayn_Hara.png" title="AI8Puzzle" width="400">
     <br>
         <i>Simple theme GUI (left) and Ayn Hara theme GUI (right)</i>
-    <br>
-    <img src="/images/neu_theme.jpg" title="AI8Puzzle" width="400">
-    <br>
-        <i>Neu theme GUI</i>
 </p>
 
+<p align="center">
+  <img src="/images/neu_theme.jpg" title="AI8Puzzle" width="400">
+    <img src="/images/neu_theme2.png" title="AI8Puzzle" width="400">
+    <br>
+        <i>Neu theme GUI (left) and White theme GUI (right)</i>
 
 
 The program supports both interactive GUI and command-line interfaces. Two GUI versions are available: one implemented in Python using the `tkinter` library, and another implemented in `C++` using the `GTK` library. The Python version is more easy to use and has more features, while the C++ version offer cool visual effects and supports `CSS` styling.
