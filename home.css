@@ -1,11 +1,30 @@
 window {
-    background-color: rgb(33, 33, 33);
+    background-color: #e4bd24;
+    background-image:
+        /* Layer 1: Base diamonds */
+        linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 75%, rgba(255, 255, 255, 0.15) 75%),
+        linear-gradient(-45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 75%, rgba(255, 255, 255, 0.15) 75%),
+        /* Layer 2: Nested diamonds simulated by offsetting the position */
+        linear-gradient(45deg, transparent 12.5%, #ffac28 12.5%, #ffac28 37.5%, transparent 37.5%, transparent 62.5%, #ffac28 62.5%, #ffac28 87.5%, transparent 87.5%),
+        linear-gradient(-45deg, transparent 12.5%, #ffac28 12.5%, #ffac28 37.5%, transparent 37.5%, transparent 62.5%, #ffac28 62.5%, #ffac28 87.5%, transparent 87.5%),
+        /* Layer 3: Highlight diamonds */
+        linear-gradient(45deg, transparent 25%, rgba(255, 255, 255, 0.1) 25%, rgba(255, 255, 255, 0.1) 75%, transparent 75%),
+        linear-gradient(-45deg, transparent 25%, rgba(183, 17, 17, 0.1) 25%, rgba(255, 255, 255, 0.1) 75%, transparent 75%),
+        /* Layer 4: Smaller nested diamonds */
+        linear-gradient(45deg, transparent 6.25%, rgba(255, 177, 60, 0.2) 6.25%, rgba(148, 0, 0, 0.2) 18.75%, transparent 18.75%, transparent 81.25%, rgba(0, 0, 0, 0.2) 81.25%, rgba(114, 1, 1, 0.2) 93.75%, transparent 93.75%),
+        linear-gradient(45deg, transparent 6.25%, rgba(255, 0, 0, 0.2) 6.25%, rgba(120, 9, 9, 0.2) 18.75%, transparent 18.75%, transparent 81.25%, rgba(0, 0, 0, 0.2) 81.25%, rgba(151, 7, 7, 0.2) 93.75%, transparent 93.75%),
+        linear-gradient(-45deg, transparent 6.25%, rgba(225, 0, 0, 0.2) 6.25%, rgba(159, 0, 0, 0.2) 18.75%, transparent 18.75%, transparent 81.25%, rgba(0, 0, 0, 0.2) 81.25%, rgba(152, 2, 2, 0.2) 93.75%, transparent 93.75%),
+        /* Layer 5: Highlight smaller diamonds */
+        linear-gradient(45deg, transparent 12.5%, rgba(208, 0, 0, 0.1) 12.5%, rgba(196, 0, 0, 0.1) 37.5%, transparent 37.5%, transparent 62.5%, rgba(151, 5, 5, 0.1) 62.5%, rgba(255, 255, 255, 0.1) 87.5%, transparent 87.5%),
+        linear-gradient(-45deg, transparent 12.5%, rgba(195, 0, 0, 0.1) 12.5%, rgba(187, 22, 22, 0.1) 37.5%, transparent 37.5%, transparent 62.5%, rgba(136, 7, 7, 0.1) 62.5%, rgba(145, 6, 6, 0.1) 87.5%, transparent 87.5%);
 
+    background-size: 80px 80px;
+    background-position: 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 60px 60px, 80px 80px, 80px 80px;
 }
 
 /* style for menu bar */
 .menu-bar {
-    background-color: #ffffff;
+    background-color: #fdd432;
     color: #2d3238;
     padding: 10px;
     font-size: 20px;
@@ -43,12 +62,7 @@ button:disabled {
     background-position: 0 0, 40px 40px;
 }
 
-GtkButton {
-    background-color: #2c3e50;
-    color: #ecf0f1;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    transition: all 0.3s ease;
-}
+
 
 GtkButton:hover {
     background-color: #34495e;
@@ -56,22 +70,7 @@ GtkButton:hover {
 }
 
 .puzzle-piece {
-    background-color: rgb(169, 150, 93);
-    background-image:
-        linear-gradient(45deg, transparent 50%, rgba(255, 191, 0, 0.3) 50%),
-        linear-gradient(135deg, transparent 50%, rgba(0, 0, 0, .3) 50%),
-        linear-gradient(225deg, transparent 50%, rgba(168, 138, 86, 0.3) 50%),
-        linear-gradient(315deg, transparent 50%, rgba(181, 163, 100, 0.3) 50%),
-        linear-gradient(45deg, rgba(255, 172, 40, 0.3) 50%, transparent 50%),
-        linear-gradient(135deg, rgba(193, 193, 193, 0.3) 50%, transparent 50%),
-        linear-gradient(225deg, rgba(255, 0, 0, 0.3) 50%, transparent 50%),
-        linear-gradient(315deg, rgba(205, 181, 181, 0.3) 50%, transparent 50%),
-        linear-gradient(45deg, transparent 60%, rgba(255, 255, 255, 0.3) 60%),
-        linear-gradient(135deg, transparent 60%, rgba(255, 255, 255, 0.3) 60%),
-        linear-gradient(225deg, transparent 60%, rgba(153, 140, 90, 0.3) 60%),
-        linear-gradient(315deg, transparent 60%, rgba(255, 255, 255, 0.3) 60%);
-    background-size: 440px 440px;
-    background-position: 0 0, 150px 150px;
+
     animation: none;
 }
 
