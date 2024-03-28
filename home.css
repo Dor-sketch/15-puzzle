@@ -1,0 +1,302 @@
+window {
+    background-color: rgb(33, 33, 33);
+
+}
+
+/* style for menu bar */
+.menu-bar {
+    background-color: #ffffff;
+    color: #2d3238;
+    padding: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    border-bottom: 1px solid #444;
+}
+
+menuitem {
+    font-size: 20px;
+    font-weight: bold;
+    border-bottom: 1px solid #444;
+    text-shadow:
+        -1px -1px 1px rgba(0, 0, 0, 0.5),
+        1px 1px 1px rgba(255, 255, 255, 0.3),
+        0 0 5px rgba(255, 255, 255, 0.3),
+        0 0 10px rgba(255, 255, 255, 0.3);
+
+}
+
+
+
+/* Vibrant dark theme for the button when it is focused */
+button:focus {
+    background-color: transparent;
+    background-image: none;
+    box-shadow: none;
+}
+
+/* Vibrant dark theme for the button when it is disabled */
+button:disabled {
+    background-color: #def;
+    background-image: radial-gradient(closest-side, transparent 98%, rgba(0, 0, 0, .3) 99%),
+        radial-gradient(closest-side, transparent 98%, rgba(0, 0, 0, .3) 99%);
+    background-size: 80px 80px;
+    background-position: 0 0, 40px 40px;
+}
+
+GtkButton {
+    background-color: #2c3e50;
+    color: #ecf0f1;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+GtkButton:hover {
+    background-color: #34495e;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+.puzzle-piece {
+    background-color: #def;
+    background-image:
+        linear-gradient(45deg, transparent 50%, rgba(0, 0, 0, .3) 50%),
+        linear-gradient(135deg, transparent 50%, rgba(0, 0, 0, .3) 50%),
+        linear-gradient(225deg, transparent 50%, rgba(0, 0, 0, .3) 50%),
+        linear-gradient(315deg, transparent 50%, rgba(0, 0, 0, .3) 50%),
+        linear-gradient(45deg, transparent 75%, rgba(0, 0, 0, .3) 75%),
+        linear-gradient(135deg, transparent 75%, rgba(0, 0, 0, .3) 75%),
+        linear-gradient(225deg, transparent 75%, rgba(0, 0, 0, .3) 75%),
+        linear-gradient(315deg, transparent 75%, rgba(0, 0, 0, .3) 75%);
+    background-size: 180px 180px, 90px 90px;
+    background-position:
+        0 0,
+        90px 0,
+        90px 90px,
+        0 90px,
+        45px 45px,
+        135px 45px,
+        135px 135px,
+        45px 135px;
+    animation: none;
+}
+
+
+
+.puzzle-piece:hover {
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1),
+        0 2px 2px rgba(0, 0, 0, 0.3),
+        0 4px 4px rgba(0, 0, 0, 0.3),
+        0 8px 8px rgba(0, 0, 0, 0.3),
+        0 16px 16px rgba(0, 0, 0, 0.5),
+        inset 0 0 5px rgba(0, 0, 0, 0.8),
+        inset 0 0 10px rgba(0, 0, 0, 0.8);
+}
+
+@keyframes gloss {
+    0% {
+        background-position: 1px;
+    }
+
+    100% {
+        background-position: 100px;
+    }
+
+}
+
+
+@keyframes shine {
+    0% {
+        background-position: -100px;
+    }
+
+    100% {
+        background-position: 100px;
+    }
+}
+
+
+
+/* Add a glow animation to the puzzle pieces */
+@keyframes glow {
+    0% {
+        box-shadow: 0 0 5px #add8e6, 0 0 10px #add8e6, 0 0 15px #add8e6, 0 0 20px #add8e6;
+    }
+
+    50% {
+        box-shadow: 0 0 10px #87cefa, 0 0 20px #87cefa, 0 0 30px #87cefa, 0 0 40px #87cefa;
+    }
+
+    100% {
+        box-shadow: 0 0 15px #0000ff, 0 0 30px #0000ff, 0 0 45px #0000ff, 0 0 60px #0000ff;
+    }
+}
+
+@keyframes blank_glow {
+    0% {
+        box-shadow: 0 0 5px #9cff57, 0 0 10px #bbff8b, 0 0 15px #9cff57, 0 0 20px #9cff57;
+    }
+
+    50% {
+        box-shadow: 0 0 10px #67ff33, 0 0 20px #67ff33, 0 0 30px #114600, 0 0 40px #0c2305;
+    }
+
+    100% {
+        box-shadow: 0 0 15px #105200, 0 0 30px #105100, 0 0 45px #030e00, 0 0 60px #000000;
+    }
+}
+
+@keyframes matrix {
+    0% {
+        background-position: 0 0;
+    }
+
+    100% {
+        background-position: 0 -1000px;
+    }
+}
+
+.tile-0 {
+    background: url('matrix.png') repeat;
+    color: #00ff00;
+    animation: matrix 2s linear infinite;
+}
+
+@keyframes pulse {
+    0% {
+        background: radial-gradient(circle at center, #4682b4, #020232);
+    }
+
+    25% {
+        background: radial-gradient(circle at center, #b0c4de, #2e3842);
+    }
+
+    50% {
+        background: radial-gradient(circle at center, #778899, #2f4f4f);
+    }
+
+    75% {
+        background: radial-gradient(circle at center, #c0c0c0, #424242);
+    }
+
+    100% {
+        background: radial-gradient(circle at center, #4682b4, #000043);
+    }
+}
+
+@keyframes bg_change {
+    0% {
+        background: linear-gradient(to bottom, #1e5631, #152422);
+    }
+
+    50% {
+        background: linear-gradient(to bottom, #152422, #1e5631);
+    }
+
+    100% {
+        background: linear-gradient(to bottom, #1e5631, #152422);
+    }
+}
+
+@keyframes gloss {
+    0% {
+        background-position: 1px;
+    }
+
+    100% {
+        background-position: 100px;
+    }
+
+}
+
+
+@keyframes shine {
+    0% {
+        background-position: -100px;
+    }
+
+    100% {
+        background-position: 100px;
+    }
+}
+
+
+
+/* Add a glow animation to the puzzle pieces */
+@keyframes glow {
+    0% {
+        box-shadow: 0 0 5px #add8e6, 0 0 10px #add8e6, 0 0 15px #add8e6, 0 0 20px #add8e6;
+    }
+
+    50% {
+        box-shadow: 0 0 10px #87cefa, 0 0 20px #87cefa, 0 0 30px #87cefa, 0 0 40px #87cefa;
+    }
+
+    100% {
+        box-shadow: 0 0 15px #0000ff, 0 0 30px #0000ff, 0 0 45px #0000ff, 0 0 60px #0000ff;
+    }
+}
+
+@keyframes blank_glow {
+    0% {
+        box-shadow: 0 0 5px #9cff57, 0 0 10px #bbff8b, 0 0 15px #9cff57, 0 0 20px #9cff57;
+    }
+
+    50% {
+        box-shadow: 0 0 10px #67ff33, 0 0 20px #67ff33, 0 0 30px #114600, 0 0 40px #0c2305;
+    }
+
+    100% {
+        box-shadow: 0 0 15px #105200, 0 0 30px #105100, 0 0 45px #030e00, 0 0 60px #000000;
+    }
+}
+
+@keyframes matrix {
+    0% {
+        background-position: 0 0;
+    }
+
+    100% {
+        background-position: 0 -1000px;
+    }
+}
+
+.tile-0 {
+    background: url('matrix.png') repeat;
+    color: #00ff00;
+    animation: matrix 2s linear infinite;
+}
+
+@keyframes pulse {
+    0% {
+        background: radial-gradient(circle at center, #4682b4, #020232);
+    }
+
+    25% {
+        background: radial-gradient(circle at center, #b0c4de, #2e3842);
+    }
+
+    50% {
+        background: radial-gradient(circle at center, #778899, #2f4f4f);
+    }
+
+    75% {
+        background: radial-gradient(circle at center, #c0c0c0, #424242);
+    }
+
+    100% {
+        background: radial-gradient(circle at center, #4682b4, #000043);
+    }
+}
+
+@keyframes bg_change {
+    0% {
+        background: linear-gradient(to bottom, #1e5631, #152422);
+    }
+
+    50% {
+        background: linear-gradient(to bottom, #152422, #1e5631);
+    }
+
+    100% {
+        background: linear-gradient(to bottom, #1e5631, #152422);
+    }
+}
