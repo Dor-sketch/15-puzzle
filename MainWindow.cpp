@@ -78,8 +78,7 @@ void MainWindow::initMenuBar() {
 
   // Add the AccelGroup to the window
   add_accel_group(accelGroup);
-}
-void MainWindow::onTheme() {
+}void MainWindow::onTheme() {
   // change css file
   // open file dialog to choose file
   Gtk::FileChooserDialog dialog("Please choose a CSS file",
@@ -105,6 +104,20 @@ void MainWindow::onTheme() {
     Gtk::StyleContext::add_provider_for_screen(
         Gdk::Screen::get_default(), css_provider,
         GTK_STYLE_PROVIDER_PRIORITY_USER);
+
+    // Create a file monitor
+    auto file = Gio::File::create_for_path(filename);
+    auto monitor = file->monitor_file();
+
+    // Connect the file monitor's changed signal to a handler that reloads the CSS
+    monitor->signal_changed().connect([css_provider, filename](const Glib::RefPtr<Gio::File>&, const Glib::RefPtr<Gio::File>&, Gio::FileMonitorEvent) {
+        try {
+            css_provider->load_from_path(filename);
+        } catch (const Glib::Error& ex) {
+            std::cerr << "Error reloading CSS: " << ex.what() << std::endl;
+        }
+    });
+
     break;
   }
   case (Gtk::RESPONSE_CANCEL): {

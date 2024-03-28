@@ -56,30 +56,24 @@ GtkButton:hover {
 }
 
 .puzzle-piece {
-    background-color: #def;
+    background-color: rgb(169, 150, 93);
     background-image:
-        linear-gradient(45deg, transparent 50%, rgba(0, 0, 0, .3) 50%),
+        linear-gradient(45deg, transparent 50%, rgba(255, 191, 0, 0.3) 50%),
         linear-gradient(135deg, transparent 50%, rgba(0, 0, 0, .3) 50%),
-        linear-gradient(225deg, transparent 50%, rgba(0, 0, 0, .3) 50%),
-        linear-gradient(315deg, transparent 50%, rgba(0, 0, 0, .3) 50%),
-        linear-gradient(45deg, transparent 75%, rgba(0, 0, 0, .3) 75%),
-        linear-gradient(135deg, transparent 75%, rgba(0, 0, 0, .3) 75%),
-        linear-gradient(225deg, transparent 75%, rgba(0, 0, 0, .3) 75%),
-        linear-gradient(315deg, transparent 75%, rgba(0, 0, 0, .3) 75%);
-    background-size: 180px 180px, 90px 90px;
-    background-position:
-        0 0,
-        90px 0,
-        90px 90px,
-        0 90px,
-        45px 45px,
-        135px 45px,
-        135px 135px,
-        45px 135px;
+        linear-gradient(225deg, transparent 50%, rgba(168, 138, 86, 0.3) 50%),
+        linear-gradient(315deg, transparent 50%, rgba(181, 163, 100, 0.3) 50%),
+        linear-gradient(45deg, rgba(255, 172, 40, 0.3) 50%, transparent 50%),
+        linear-gradient(135deg, rgba(193, 193, 193, 0.3) 50%, transparent 50%),
+        linear-gradient(225deg, rgba(255, 0, 0, 0.3) 50%, transparent 50%),
+        linear-gradient(315deg, rgba(205, 181, 181, 0.3) 50%, transparent 50%),
+        linear-gradient(45deg, transparent 60%, rgba(255, 255, 255, 0.3) 60%),
+        linear-gradient(135deg, transparent 60%, rgba(255, 255, 255, 0.3) 60%),
+        linear-gradient(225deg, transparent 60%, rgba(153, 140, 90, 0.3) 60%),
+        linear-gradient(315deg, transparent 60%, rgba(255, 255, 255, 0.3) 60%);
+    background-size: 440px 440px;
+    background-position: 0 0, 150px 150px;
     animation: none;
 }
-
-
 
 .puzzle-piece:hover {
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1),
