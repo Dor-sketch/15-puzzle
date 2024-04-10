@@ -1,3 +1,3 @@
 # pragma once
 
-const int SIZE = 64;
+const int SIZE = 9;

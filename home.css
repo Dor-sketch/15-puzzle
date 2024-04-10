@@ -1,32 +1,46 @@
 window {
-    background-color: #e4bd24;
+    background-color: #df800d;
     background-image:
         /* Matte effect */
         linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)),
         /* Tile separation */
-        linear-gradient(90deg, rgba(0, 0, 0, 0.225) 1%, transparent 99%),
-                linear-gradient(90deg, rgba(0, 0, 0, 0.225) 1%, transparent 99%),
-        linear-gradient(0deg, rgba(0, 0, 0, 0.157) 1%, transparent 99%),
-                linear-gradient(0deg, rgba(0, 0, 0, 0.157) 1%, transparent 99%),
+        linear-gradient(0deg, rgb(0, 0, 0) 1px, transparent 1px),
+        linear-gradient(0deg, rgba(0, 0, 0, 0.157) 1px, transparent 1px),
+         linear-gradient(0deg, rgba(0, 0, 0, 0.225) 1px, transparent 1px), linear-gradient(0deg, rgba(0, 0, 0, 0.157) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 0, 0, 0.225) 1px, transparent 1px), linear-gradient(0deg, rgba(0, 0, 0, 0.157) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 0, 0, 0.225) 1px, transparent 1px), linear-gradient(0deg, rgba(0, 0, 0, 0.157) 1px, transparent 1px),
         /* Your existing layers */
         linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 75%, rgba(255, 255, 255, 0.15) 75%),
         linear-gradient(-45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 75%, rgba(255, 255, 255, 0.15) 75%),
+        linear-gradient(45deg, transparent 20%, rgba(255, 255, 255, 0.1) 20%, rgba(255, 255, 255, 0.1) 20%, transparent 30%, transparent 70%, rgba(255, 255, 255, 0.1) 70%, rgba(255, 255, 255, 0.1) 80%, transparent 80%),
+        linear-gradient(-45deg, transparent 20%, rgba(255, 255, 255, 0.1) 20%, rgba(255, 255, 255, 0.1) 20%, transparent 20%, transparent 70%, rgba(255, 255, 255, 0.1) 70%, rgba(255, 255, 255, 0.1) 80%, transparent 80%),
         linear-gradient(45deg,  transparent 12.5%, #ffac28 12.5%, #ffac28 37.5%, transparent 37.5%, transparent 62.5%, #ffac28 62.5%, #ffac28 87.5%, transparent 87.5%),
+
+        linear-gradient(45deg, transparent 12.5%, #ffac28 12.5%, #b77710 37.5%, transparent 37.5%, transparent 62.5%, #ffac28 62.5%, #ffac28 87.5%, transparent 87.5%),
         linear-gradient(-45deg, transparent 12.5%, #ffac28 12.5%, #ffac28 37.5%, transparent 37.5%, transparent 62.5%, #ffac28 62.5%, #ffac28 87.5%, transparent 87.5%),
-        linear-gradient(45deg,  transparent 25%,  rgba(255, 255, 255, 0.1)  25%, rgba(255, 255, 255, 0.1) 75%, transparent 75%),
-        linear-gradient(-45deg, transparent 25%,  rgba(183, 17, 17, 0.1)        25%, rgba(255, 255, 255, 0.1) 75%, transparent 75%),
-        linear-gradient(45deg,  transparent 6.25%, rgba(255, 177, 60, 0.2)         6.25%, rgba(148, 0, 0, 0.2) 18.75%, transparent 18.75%, transparent 81.25%, rgba(0, 0, 0, 0.2) 81.25%, rgba(114, 1, 1, 0.2) 93.75%, transparent 93.75%),
-        linear-gradient(45deg,  transparent 6.25%, rgba(255, 0, 0, 0.2)     6.25%, rgba(120, 9, 9, 0.2) 18.75%, transparent 18.75%, transparent 81.25%, rgba(0, 0, 0, 0.2) 81.25%, rgba(151, 7, 7, 0.2) 93.75%, transparent 93.75%),
-        linear-gradient(-45deg, transparent 6.25%, rgba(225, 0, 0, 0.2)        6.25%, rgba(159, 0, 0, 0.2) 18.75%, transparent 18.75%, transparent 81.25%, rgba(0, 0, 0, 0.2) 81.25%, rgba(152, 2, 2, 0.2) 93.75%, transparent 93.75%),
-        linear-gradient(45deg,  transparent 12.5%, rgba(208, 0, 0, 0.1)      12.5%, rgba(196, 0, 0, 0.1) 37.5%, transparent 37.5%, transparent 62.5%, rgba(151, 5, 5, 0.1) 62.5%, rgba(255, 255, 255, 0.1) 87.5%, transparent 87.5%),
-        linear-gradient(-45deg, transparent 12.5%, rgba(195, 0, 0, 0.1)        12.5%, rgba(187, 22, 22, 0.1) 37.5%, transparent 37.5%, transparent 62.5%, rgba(136, 7, 7, 0.1) 62.5%, rgba(145, 6, 6, 0.1) 87.5%, transparent 87.5%);
+        linear-gradient(-45deg, transparent 12.5%, #ffac28 12.5%, #ffac28 37.5%, transparent 37.5%, transparent 62.5%, #ffac28 62.5%, #ff2828 87.5%, transparent 87.5%),
+        linear-gradient(45deg, transparent 0%, #ffac28 0%, #ffac28 1%, transparent 100%, transparent 0%, #ffac28 0%, #ffac28 100%, transparent 100%),
+        linear-gradient(45deg,  transparent 25%,  rgba(255, 255, 255, 0.1)  25%, rgba(255, 255, 255, 0.1) 75%, transparent 75%, transparent 4%  , rgba(255, 0, 0, 0.1) 100%, transparent 5%, transparent 50%  , rgba(255, 255, 255, 0.1) 100%, transparent 40%, transparent 5%  , rgba(255, 255, 255, 0.1) 100%, transparent 40%),
+        linear-gradient(-45deg, transparent 25%,  rgba(255, 17, 17, 0.1)        25%, rgba(255, 255, 255, 0.1) 75%, transparent 75%, transparent 4%  , rgba(255, 255, 255, 0.1) 100%, transparent 5%, transparent 50%  , rgba(255, 255, 255, 0.1) 100%, transparent 40%, transparent 5%  , rgba(255, 255, 255, 0.1) 100%, transparent 40%),
+        linear-gradient(45deg,  transparent 6.25%, rgba(255, 177, 60, 0.1)         6.25%, rgba(148, 0, 0, 0.1) 18.75%, transparent 18.75%, transparent 81.25%, rgba(0, 0, 0, 0.2) 81.25%, rgba(114, 1, 1, 0.1) 93.75%, transparent 4.75%),
+        linear-gradient(45deg,  transparent 6.25%, rgba(255, 0, 0, 0.1)     6.25%, rgba(120, 9, 9, 0.2) 18.75%, transparent 18.75%, transparent 81.25%, rgba(0, 0, 0, 0.2) 81.25%, rgba(151, 7, 7, 0.2) 93.75%, transparent 93.75%),
+        linear-gradient(-45deg,  transparent 6.25%, rgba(255, 0, 0, 0.1)     6.25%, rgba(120, 9, 9, 0.2) 18.75%, transparent 18.75%, transparent 81.25%, rgba(0, 0, 0, 0.51) 81.25%, rgba(209, 139, 27, 0.707) 93.75%, transparent 93.75%),
+        linear-gradient(-45deg,  transparent 10%, rgba(255, 0, 0, 0.1)     10%, rgba(120, 9, 9, 0.2) 30%, transparent 30%, transparent 70%, rgba(0, 0, 0, 0.51) 70%, rgba(209, 139, 27, 0.707) 90%, transparent 90%),
+        linear-gradient(45deg,  transparent 10%, rgba(255, 0, 0, 0.1)     10%, rgba(120, 9, 9, 0.2) 30%, transparent 30%, transparent 70%, rgba(0, 0, 0, 0.51) 70%, rgba(209, 139, 27, 0.707) 90%, transparent 90%),
+        linear-gradient(45deg,  transparent 12.5%, rgba(255, 0, 0, 0.1)      12.5%, rgba(196, 0, 0, 0.1) 37.5%, transparent 37.5%, transparent 62.5%, rgba(151, 5, 5, 0.1) 62.5%, rgba(255, 255, 255, 0.1) 87.5%, transparent 87.5%),
+        linear-gradient(-45deg, transparent 12.5%, rgba(255, 0, 0, 0.1)        12.5%, rgba(187, 22, 22, 0.1) 37.5%, transparent 37.5%, transparent 62.5%, rgba(136, 7, 7, 0.1) 62.5%, rgba(145, 6, 6, 0.1) 87.5%, transparent 87.5%),
+        linear-gradient(45deg,  transparent 15%, rgb(255, 0, 0)      15%, rgba(255, 0, 0, 0.1) 40%, transparent 40%, transparent 60%, rgba(151, 5, 5, 0.1) 60%, rgba(255, 255, 255, 0.1) 85%, transparent 85%);
 
-    background-size: 160px 160px;
+    background-size: 300px 300px;
     /* cahnging background size must keep the rations */
-    background-position: 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 120px 120px, 160px 160px, 160px 160px;
+    background-position: 0 0,
+    0 0,
+    150px 150px,
+    0 0,
+    150px 150px,
+    0 0, 150px 150px, 0 0, 0 0, 0 0, 150px 150px, 150px 150px, 150px 150px, 150px 150px, 150px 150px, 150px 150px ;
 }
-
-/* style for menu bar */
+/*
 .menu-bar {
     background-color: #fdd432;
     color: #2d3238;
@@ -46,7 +60,7 @@ menuitem {
         0 0 5px rgba(255, 255, 255, 0.3),
         0 0 10px rgba(255, 255, 255, 0.3);
 
-}
+} */
 
 
 
@@ -56,16 +70,6 @@ button:focus {
     background-image: none;
     box-shadow: none;
 }
-
-/* Vibrant dark theme for the button when it is disabled */
-button:disabled {
-    background-color: #def;
-    background-image: radial-gradient(closest-side, transparent 98%, rgba(0, 0, 0, .3) 99%),
-        radial-gradient(closest-side, transparent 98%, rgba(0, 0, 0, .3) 99%);
-    background-size: 80px 80px;
-    background-position: 0 0, 40px 40px;
-}
-
 
 
 GtkButton:hover {

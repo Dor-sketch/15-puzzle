@@ -8,7 +8,7 @@ import heapq
 import math
 import sys
 
-NUM_TILES = 64
+NUM_TILES = 9
 
 TARGET_A = [i for i in range(1, NUM_TILES)] + [0]
 TARGET_B = [0] + [i for i in range(1, NUM_TILES)]
