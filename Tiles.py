@@ -8,8 +8,11 @@ import heapq
 import math
 import sys
 
-TARGET_A = [0, 1, 2, 3, 4, 5, 6, 7, 8]
-TARGET_B = [1, 2, 3, 4, 5, 6, 7, 8, 0]
+NUM_TILES = 64
+
+TARGET_A = [i for i in range(1, NUM_TILES)] + [0]
+TARGET_B = [0] + [i for i in range(1, NUM_TILES)]
+
 
 
 class State:
@@ -17,11 +20,13 @@ class State:
     Represents the state of an 8-puzzle board, handling the transformation of
     a 1D list of numbers into a 2D matrix and generating possible moves.
     """
+    def _is_square(self, n):
+        return n == int(n ** 0.5) ** 2
 
-    def __init__(self, numbers: List[int], rows=3, cols=3):
-        if len(numbers) != rows * cols or not self._is_square(len(numbers)):
+    def __init__(self, numbers: List[int], rows=int(math.sqrt(NUM_TILES)), cols=int(math.sqrt(NUM_TILES))):
+        if not self._is_square(len(numbers)):
             print(numbers)
-            raise ValueError("Invalid board size. Must be 3x3, found " + str(len(numbers)))
+            raise ValueError("Invalid board size. Must be NxN, found " + str(len(numbers)))
         self.numbers = numbers
         self.rows, self.cols = rows, cols
         self.matrix = self._create_matrix(numbers, rows, cols)
@@ -538,7 +543,7 @@ def solvePuzzle(tiles: List[str]):
     print(tiles)
     initial_state = State(tiles)
     print(initial_state)
-    path = BFS(initial_state).search().get_path()
+    path = AStar(initial_state).search().get_path()
     print(str(path))
     # return without the brackets
     return str(path)

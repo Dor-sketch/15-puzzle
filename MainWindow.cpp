@@ -7,13 +7,19 @@
 #include <random>
 #include <thread>
 
-extern const std::string solve(const std::array<int, 9> &board);
+
+#define WINDOW_SIZE 1256
+
+extern const std::string solve(const std::array<int, SIZE> &board);
 
 MainWindow::MainWindow() {
-  fallingCharsWidgets.resize(9);
+    signal_key_press_event().connect(sigc::mem_fun(*this, &MainWindow::on_key_press));
+
+  fallingCharsWidgets.resize(SIZE);
   initMenuBar();
-  set_default_size(840, 840);
-  set_title("8-Puzzle Game");
+  set_default_size(WINDOW_SIZE, WINDOW_SIZE);
+  std::string title = std::to_string(SIZE-1) + " Puzzle Game";
+  set_title(title);
   grid.set_row_homogeneous(true);
   grid.set_column_homogeneous(true);
   initButtons();
@@ -23,6 +29,21 @@ MainWindow::MainWindow() {
   // Add the box to the window
   add(box);
   start();
+}
+
+bool MainWindow::on_key_press(GdkEventKey *event) {
+    if ((event->state & GDK_CONTROL_MASK) && (event->keyval == GDK_KEY_c)) {
+      hide(); // Closes the application
+      return true; // Event has been handled
+    }
+  if (event->keyval == GDK_KEY_n) {
+    onShuffle();
+  } else if (event->keyval == GDK_KEY_s) {
+    onSolve();
+  } else if (event->keyval == GDK_KEY_r) {
+    onReset();
+  }
+  return true;
 }
 
 void MainWindow::start() {
@@ -132,7 +153,8 @@ void MainWindow::initMenuBar() {
 }
 
 void MainWindow::addButton(int i) {
-  buttons[i].set_size_request(100, 100);
+  auto cell_size = static_cast<int>(static_cast<float>(WINDOW_SIZE) / SIZE);
+  buttons[i].set_size_request(cell_size, cell_size);
   buttons[i].get_style_context()->add_class("tile");
   buttons[i].get_style_context()->add_class("puzzle-piece");
   buttons[i].set_label(std::to_string(game[i]));
@@ -142,7 +164,8 @@ void MainWindow::addButton(int i) {
   overlays[i].add_overlay(buttons[i]); // Add the button to the overlay
 
   // attach to grid - from 2nd row
-  grid.attach(overlays[i], i % 3, i / 3 + 1, 1, 1);
+  int root = std::sqrt(SIZE);
+  grid.attach(overlays[i], i % root, i / root + 1, 1, 1);
   buttons[i].signal_clicked().connect([this, i] {
     game.move(i);
     updateBoard();
@@ -163,7 +186,7 @@ void MainWindow::addButton(int i) {
 void MainWindow::updateBoard() {
   std::cout << "updateBoard" << std::endl;
   int blank = 0;
-  for (int i = 0; i < 9; ++i) {
+  for (int i = 0; i < SIZE; ++i) {
     if (game[i] != 0) {
       buttons[i].set_label(std::to_string(game[i]));
       buttons[i].get_style_context()->remove_class("tile-0");
@@ -188,7 +211,7 @@ char MainWindow::randomCharacter() {
 }
 
 void MainWindow::initButtons() {
-  for (int i = 0; i < 9; ++i) {
+  for (int i = 0; i < SIZE; ++i) {
     addButton(i);
   }
 }
@@ -234,7 +257,7 @@ void MainWindow::processMove(int tile) {
     onMove(index);
     Glib::signal_timeout().connect_once(
         sigc::mem_fun(*this, &MainWindow::processNextMove),
-        1000); // delay in milliseconds
+        100); // delay in milliseconds
   } else {
     std::cerr << "Tile " << tile << " not found in board\n";
   }

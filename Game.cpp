@@ -1,7 +1,7 @@
 #include "Game.h"
 #include <random>
 
-const int NUMBER_OF_MOVES = 10;
+const int NUMBER_OF_MOVES = 30;
 
 Game::Game() { std::iota(board.begin(), board.end(), 0); }
 
@@ -10,7 +10,7 @@ void Game::shuffle() {
   static std::random_device rd;
   static std::mt19937 g(rd());
   for (int i = 0; i < NUMBER_OF_MOVES; ++i) {
-    std::uniform_int_distribution<> dist(0, 8);
+    std::uniform_int_distribution<> dist(0, SIZE - 1);
     move(dist(g));
   }
 }
@@ -22,13 +22,14 @@ bool Game::isSolved() const {
 void Game::reset() { std::iota(board.begin(), board.end(), 0); }
 
 void Game::move(int index) {
-  if (index % 3 > 0 && board[index - 1] == 0) {
+  auto root = static_cast<int>(std::sqrt(SIZE));
+  if (index % root > 0 && board[index - 1] == 0) {
     std::swap(board[index], board[index - 1]);
-  } else if (index % 3 < 2 && board[index + 1] == 0) {
+  } else if (index % root < root - 1 && board[index + 1] == 0) {
     std::swap(board[index], board[index + 1]);
-  } else if (index / 3 > 0 && board[index - 3] == 0) {
-    std::swap(board[index], board[index - 3]);
-  } else if (index / 3 < 2 && board[index + 3] == 0) {
-    std::swap(board[index], board[index + 3]);
+  } else if (index / root > 0 && board[index - root] == 0) {
+    std::swap(board[index], board[index - root]);
+  } else if (index / root < root - 1 && board[index + root] == 0) {
+    std::swap(board[index], board[index + root]);
   }
 }

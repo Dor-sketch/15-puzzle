@@ -5,7 +5,7 @@
 #include <array>
 
 
-const std::string solve(const std::array<int, 9>& board) {
+const std::string solve(const std::array<int, SIZE>& board) {
   Py_Initialize();
 
   PyObject *typingModule = PyImport_ImportModule("typing");
@@ -44,7 +44,7 @@ const std::string solve(const std::array<int, 9>& board) {
       PyObject *pyList = PyList_New(0); // create a new empty Python list
 
       // parse the puzzle board into a Python list
-      for (int i = 0; i < 9; ++i) {
+      for (int i = 0; i < SIZE; i++) {
         PyObject *pyInt = PyLong_FromLong(board[i]);
         PyList_Append(pyList, pyInt);
         Py_DECREF(pyInt);

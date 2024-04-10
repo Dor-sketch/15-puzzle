@@ -4,7 +4,7 @@
 #include "Game.h"
 #include <gtk/gtk.h>
 #include <gtkmm.h>
-
+#include "tiles.h"
 class MainWindow : public Gtk::Window {
 public:
   MainWindow();
@@ -27,17 +27,18 @@ private:
   void onShuffled();
   void onTheme();
   char randomCharacter();
+  bool on_key_press(GdkEventKey* event);
 
   bool isSolved = false;
   bool isShuffled = false;
   std::vector<FallingCharsWidget> fallingCharsWidgets;
   std::vector<int> moves;
-  std::array<Gtk::Overlay, 9> overlays;
+  std::array<Gtk::Overlay, SIZE> overlays;
   Gtk::MenuBar menuBar;
   Gtk::Grid grid;
   Gtk::Label label;
   Gtk::Label movesLabel;
-  std::array<Gtk::Button, 9> buttons;
+  std::array<Gtk::Button, SIZE> buttons;
   Gtk::Button shuffleButton{"Shuffle"};
   Gtk::Button solveButton{"Solve"};
   Gtk::Button resetButton{"Reset"};
