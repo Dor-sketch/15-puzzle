@@ -2,8 +2,11 @@
 #include <random>
 
 const int NUMBER_OF_MOVES = 30;
+extern int SIZE;
 
-Game::Game() { std::iota(board.begin(), board.end(), 0); }
+Game::Game() {
+board.resize(SIZE);
+std::iota(board.begin(), board.end(), 0); }
 
 void Game::shuffle() {
   // shuffle solvable board by generating random list NUMBER_OF_MOVES long

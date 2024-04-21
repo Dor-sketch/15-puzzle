@@ -2,10 +2,11 @@
 #include <iostream>
 #include <Python.h>
 #include <string>
-#include <array>
+#include <vector>
 
 
-const std::string solve(const std::array<int, SIZE>& board) {
+const std::string solve(const std::vector<int> &board) {
+std::cout << "solve" << std::endl;
   Py_Initialize();
 
   PyObject *typingModule = PyImport_ImportModule("typing");
@@ -28,6 +29,11 @@ const std::string solve(const std::array<int, SIZE>& board) {
     PyErr_Print();
   }
 
+  PyObject *dequeModule = PyImport_ImportModule("deque");
+  if (!dequeModule) {
+    PyErr_Print();
+  }
+
   const char *path = "./";
   wchar_t *wpath = Py_DecodeLocale(path, NULL);
   if (wpath != NULL) {
@@ -35,14 +41,15 @@ const std::string solve(const std::array<int, SIZE>& board) {
     PyMem_RawFree(wpath);
   }
   PyObject *tilesModule = PyImport_ImportModule("tiles");
+  std::cout << "imported" << std::endl;
   if (tilesModule != NULL) {
     // Get the main function
     PyObject *mainFunc = PyObject_GetAttrString(tilesModule, "solvePuzzle");
-
+std::cout << "got main" << std::endl;
     if (mainFunc && PyCallable_Check(mainFunc)) {
       // Create a tuple for the arguments - the current board
       PyObject *pyList = PyList_New(0); // create a new empty Python list
-
+      std::cout<<SIZE<<std::endl;
       // parse the puzzle board into a Python list
       for (int i = 0; i < SIZE; i++) {
         PyObject *pyInt = PyLong_FromLong(board[i]);

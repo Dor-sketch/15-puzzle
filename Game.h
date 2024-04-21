@@ -1,13 +1,14 @@
 #pragma once
 
 #include <array>
-#include "tiles.h"
+#include <vector>
+extern int SIZE;
 
 class Game {
 public:
   Game();
   int operator[](int index) const { return board[index]; }
-  const std::array<int, SIZE> &getBoard() const { return board; }
+  const std::vector<int> &getBoard() const { return board; }
   bool isSolved() const;
   void shuffle();
   void move(int index);
@@ -16,5 +17,5 @@ public:
   void quit();
 
 private:
-  std::array<int, SIZE> board;
+  std::vector<int> board;
 };

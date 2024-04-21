@@ -4,14 +4,12 @@ This program demonstrate 4 searching algorithms to solve the Tile problem
 """
 
 from typing import List
+from collections import deque
 import heapq
 import math
 import sys
 
-NUM_TILES = 9
 
-TARGET_A = [i for i in range(1, NUM_TILES)] + [0]
-TARGET_B = [0] + [i for i in range(1, NUM_TILES)]
 
 
 
@@ -23,13 +21,16 @@ class State:
     def _is_square(self, n):
         return n == int(n ** 0.5) ** 2
 
-    def __init__(self, numbers: List[int], rows=int(math.sqrt(NUM_TILES)), cols=int(math.sqrt(NUM_TILES))):
+    def __init__(self, numbers: List[int] = None):
+        num_tiles = len(numbers)
+        self.TARGET_A = [i for i in range(1, num_tiles)] + [0]
+        self.TARGET_B = [0] + [i for i in range(1, num_tiles)]
         if not self._is_square(len(numbers)):
             print(numbers)
             raise ValueError("Invalid board size. Must be NxN, found " + str(len(numbers)))
         self.numbers = numbers
-        self.rows, self.cols = rows, cols
-        self.matrix = self._create_matrix(numbers, rows, cols)
+        self.rows, self.cols = int(math.sqrt(len(numbers))), int(math.sqrt(len(numbers)))
+        self.matrix = self._create_matrix(numbers, self.rows, self.cols)
 
     def _is_square(self, n):
         return math.sqrt(n).is_integer()
@@ -119,7 +120,7 @@ class PriorityQueueNode(Node):
         self.priority = p
 
 
-    def tiles_out_of_row_and_column_heuristic(self, target: List[int]=TARGET_A):
+    def tiles_out_of_row_and_column_heuristic(self, target: List[int]):
         dimension_size = int(len(self.state.numbers) ** 0.5)
         heuristic_value = 0
         for i, tile in enumerate(self.state.numbers):
@@ -135,7 +136,7 @@ class PriorityQueueNode(Node):
 
         return heuristic_value
 
-    def conflict_heuristic(self, target: List[int]=TARGET_A):
+    def conflict_heuristic(self, target: List[int]):
         """
         This heuristic is based on the number of conflicts in each row and column.
         That is, the number of tiles that are in their goal row or column but are
@@ -161,7 +162,7 @@ class PriorityQueueNode(Node):
 
         return heuristic_value
 
-    def manhattan_distance(self, target: List[int] = TARGET_A):
+    def manhattan_distance(self, target: List[int]):
         distance = 0.0
         for i, tile in enumerate(self.state.numbers):
             if tile != 0:
@@ -172,7 +173,7 @@ class PriorityQueueNode(Node):
                 distance += abs(x2 - x1) + abs(y2 - y1)
         return distance
 
-    def my_heuristic(self, target: List[int] = TARGET_A):
+    def my_heuristic(self, target: List[int]):
         return self.conflict_heuristic()
 
 
@@ -187,7 +188,7 @@ class PriorityQueueNode(Node):
     def calculte_euclidean_distance_for_tile(self, current_row, current_col, goal_row, goal_col):
         return ((goal_row - current_row)**2 + (goal_col - current_col)**2)**0.5
 
-    def calculate_euclidean_distance(self, target: List[int] = TARGET_A,
+    def calculate_euclidean_distance(self, target: List[int],
                                      dimension_size: int = 3):
         distance = 0
         for i, tile in enumerate(self.state.numbers):
@@ -253,8 +254,10 @@ class Frontier:
     In uninformed algorithms the type changes to list (for Stack and FIFO)
     """
 
-    def __init__(self, initial_node, max_length=None, previous_count: int = 0):
+    def __init__(self, initial_node, max_length=None, previous_count: int = 0, is_heap=True):
         self.open_list = []
+        if not is_heap:
+            self.open_list = deque()
         self.explored_count = previous_count
         self.max_length = max_length
         self.insert_to_frontier(initial_node)
@@ -338,8 +341,8 @@ class SearchAlgorithm:
         return 0
 
     def is_target(self, state):
-        return state.numbers == TARGET_A or \
-            state.numbers == TARGET_B
+        return state.numbers == state.TARGET_A or \
+            state.numbers == state.TARGET_B
 
     def __repr__(self):
         self.solution_node = self.search()
@@ -362,7 +365,7 @@ class BFS(SearchAlgorithm):
             if self.open_list:
                 # For BFS, we remove from the front of the list (queue behavior)
                 self.explored_count += 1
-                return self.open_list.pop(0)
+                return self.open_list.popleft()
             return None
 
         def insert_to_frontier(self, node):
@@ -401,7 +404,7 @@ class IDDFS(SearchAlgorithm):
         def remove_from_frontier(self):
             if self.open_list:
                 self.explored_count += 1
-                return self.open_list.pop()
+                return self.open_list.popleft()
 
             return None
 
@@ -461,7 +464,7 @@ class GBFS(SearchAlgorithm):
             """
             Only for clarity - priority already init inside derived node class
             """
-            return node.my_heuristic(TARGET_A)
+            return node.my_heuristic(node.state.TARGET_A)
 
 
     def __init__(self, initial_state):
@@ -498,8 +501,8 @@ class AStar(SearchAlgorithm):
         def set_priority(self, node: PriorityQueueNode):
             # A* specific priority calculation
             return node.cost + \
-                min(node.calculate_euclidean_distance(TARGET_A),
-                    node.calculate_euclidean_distance(TARGET_B))
+                min(node.calculate_euclidean_distance(node.state.TARGET_A),
+                    node.calculate_euclidean_distance(node.state.TARGET_B))
 
     def __init__(self, initial_state):
         super().__init__(initial_state, "A*")
@@ -528,8 +531,6 @@ def runSearchAlgorithms(algorithm, tiles: List[str]):
     tiles = [0 if tile == ' ' else tile for tile in tiles]
     # make sure all are integers
     tiles = [int(tile) for tile in tiles]
-    if tiles == TARGET_A or tiles == TARGET_B:
-        return []
     initial_state = State(tiles)
     print(initial_state)
     soulution = algorithm(initial_state).search()
@@ -542,6 +543,8 @@ def solvePuzzle(tiles: List[str]):
     """
     print(tiles)
     initial_state = State(tiles)
+    if initial_state.numbers == initial_state.TARGET_A or initial_state.numbers == initial_state.TARGET_B:
+        return [len(tiles)-1] if initial_state.numbers == initial_state.TARGET_A else [0]
     print(initial_state)
     path = AStar(initial_state).search().get_path()
     print(str(path))

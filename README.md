@@ -158,8 +158,10 @@ The program supports both interactive GUI and command-line interfaces. Two GUI v
 - To run the C++ GUI, first make sure you have `GTK` installed. Then navigate to the directory containing `AI8Puzzle` and execute the following command in the terminal:
 
     ```bash
-    ./make && ./main
+    ./make && ./main <-s number of tiles>
     ```
+
+    The `-s` flag is optional and allows you to set the number of tiles in the puzzle (including the blank tile). The default is 9 tiles. The program will generate a random solvable puzzle and open a window where you can interact with the puzzle.
 
     <p align="center">
       <img src="/images/elegant_theme.png" title="AI8Puzzle" width="400">

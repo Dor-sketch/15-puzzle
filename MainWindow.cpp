@@ -10,9 +10,11 @@
 
 #define WINDOW_SIZE 1256
 
-extern const std::string solve(const std::array<int, SIZE> &board);
+extern const std::string solve(const std::vector<int> &board);
+extern int SIZE;
 
 MainWindow::MainWindow() {
+std::cout <<SIZE << std::endl;
     signal_key_press_event().connect(sigc::mem_fun(*this, &MainWindow::on_key_press));
 
   fallingCharsWidgets.resize(SIZE);
@@ -36,6 +38,7 @@ bool MainWindow::on_key_press(GdkEventKey *event) {
       hide(); // Closes the application
       return true; // Event has been handled
     }
+    std::cout << "Key pressed: " << event->keyval << std::endl;
   if (event->keyval == GDK_KEY_n) {
     onShuffle();
   } else if (event->keyval == GDK_KEY_s) {
@@ -53,6 +56,7 @@ void MainWindow::start() {
 }
 
 void MainWindow::initMenuBar() {
+std::cout << "initMenuBar" << std::endl;
   // Create an AccelGroup
   Glib::RefPtr<Gtk::AccelGroup> accelGroup = Gtk::AccelGroup::create();
 
@@ -99,7 +103,12 @@ void MainWindow::initMenuBar() {
 
   // Add the AccelGroup to the window
   add_accel_group(accelGroup);
-}void MainWindow::onTheme() {
+}
+
+
+
+void MainWindow::onTheme() {
+std::cout << "onTheme" << std::endl;
   // change css file
   // open file dialog to choose file
   Gtk::FileChooserDialog dialog("Please choose a CSS file",
@@ -158,7 +167,6 @@ void MainWindow::addButton(int i) {
   buttons[i].get_style_context()->add_class("tile");
   buttons[i].get_style_context()->add_class("puzzle-piece");
   buttons[i].set_label(std::to_string(game[i]));
-
   overlays[i].add_overlay(
       fallingCharsWidgets[i]);         // Add the matrix effect to the overlay
   overlays[i].add_overlay(buttons[i]); // Add the button to the overlay
@@ -184,7 +192,6 @@ void MainWindow::addButton(int i) {
 }
 
 void MainWindow::updateBoard() {
-  std::cout << "updateBoard" << std::endl;
   int blank = 0;
   for (int i = 0; i < SIZE; ++i) {
     if (game[i] != 0) {
@@ -211,13 +218,15 @@ char MainWindow::randomCharacter() {
 }
 
 void MainWindow::initButtons() {
+  // reserve space for the buttons
+  buttons = std::vector<Gtk::Button>(SIZE);
+  overlays = std::vector<Gtk::Overlay>(SIZE);
   for (int i = 0; i < SIZE; ++i) {
     addButton(i);
   }
 }
 
 void MainWindow::onMove(int index) {
-  std::cout << "moving " << index << std::endl;
   game.move(index);
   updateBoard();
 }
@@ -230,7 +239,6 @@ void MainWindow::onShuffle() {
 // Modify the onSolve function
 void MainWindow::onSolve() {
   auto solution = solve(game.getBoard());
-  std::cout << "Solution: " << solution << std::endl;
   if (solution.empty()) {
     std::cerr << "No solution returned\n";
     return;

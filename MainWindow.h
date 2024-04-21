@@ -4,7 +4,9 @@
 #include "Game.h"
 #include <gtk/gtk.h>
 #include <gtkmm.h>
-#include "tiles.h"
+
+extern int SIZE;
+
 class MainWindow : public Gtk::Window {
 public:
   MainWindow();
@@ -33,12 +35,12 @@ private:
   bool isShuffled = false;
   std::vector<FallingCharsWidget> fallingCharsWidgets;
   std::vector<int> moves;
-  std::array<Gtk::Overlay, SIZE> overlays;
+  std::vector<Gtk::Overlay> overlays;
   Gtk::MenuBar menuBar;
   Gtk::Grid grid;
   Gtk::Label label;
   Gtk::Label movesLabel;
-  std::array<Gtk::Button, SIZE> buttons;
+  std::vector<Gtk::Button> buttons;
   Gtk::Button shuffleButton{"Shuffle"};
   Gtk::Button solveButton{"Solve"};
   Gtk::Button resetButton{"Reset"};
