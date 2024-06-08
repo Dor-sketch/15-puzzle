@@ -36,7 +36,7 @@ int main(int argc, char *argv[]) {
   // Load the CSS
   auto css_provider = Gtk::CssProvider::create();
   try {
-    css_provider->load_from_path("style.css");
+    css_provider->load_from_path("./src/styles/style.css");
   } catch (const Glib::FileError &ex) {
     std::cerr << "FileError: " << ex.what() << std::endl;
     return 1;

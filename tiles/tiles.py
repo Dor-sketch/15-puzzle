@@ -501,8 +501,8 @@ class AStar(SearchAlgorithm):
         def set_priority(self, node: PriorityQueueNode):
             # A* specific priority calculation
             return node.cost + \
-                min(node.calculate_euclidean_distance(node.state.TARGET_A),
-                    node.calculate_euclidean_distance(node.state.TARGET_B))
+                min(node.manhattan_distance(node.state.TARGET_A),
+                    node.manhattan_distance(node.state.TARGET_B))
 
     def __init__(self, initial_state):
         super().__init__(initial_state, "A*")
