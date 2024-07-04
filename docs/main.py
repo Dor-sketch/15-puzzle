@@ -34,7 +34,7 @@ TILES_TEXT_COLOR = GREEN  # Bright Green
 
 # Fonts
 font_path = "font.ttf"
-FONT = pygame.font.Font(font_path, TILE_SIZE // 2)
+FONT = pygame.font.Font('Courier.ttf', TILE_SIZE // 2)
 MATRIX_FONT = pygame.font.Font(font_path, 20)
 BUTTON_FONT = pygame.font.Font('Courier.ttf', 24)
 INSTRUCTIONS_FONT = pygame.font.Font('Courier.ttf', 14)
@@ -120,7 +120,7 @@ class MatrixRain:
         self.trail = []
         self.reset_delay = 0
         self.max_trail_length = random.randint(
-            5, screen.get_height() // self.font.get_height())
+            10, screen.get_height() // self.font.get_height())
 
     async def fall(self, surface):
         if self.reset_delay > 0:
@@ -148,10 +148,10 @@ class MatrixRain:
             text.blit(alpha_surface, (0, 0),
                       special_flags=pygame.BLEND_RGBA_MULT)
             surface.blit(text, (self.x, self.y - i * text.get_height()))
-        if self.y > WINDOW_SIZE:
+        if self.y > WINDOW_SIZE + self.max_trail_length * text_surface.get_height():
             self.y = 0
             self.trail = []
-            self.reset_delay = random.randint(0, int(1 // self.speed + 0.1))
+            self.reset_delay = random.randint(0, int(10 // self.speed + 0.1))
 
 
 # Calculate the number of lines based on the window size and the width of a character
@@ -168,7 +168,7 @@ for x in range(num_lines):
     position_x = x * (screen.get_width() // num_lines)
     position_y = 0
     color = MATRIX_GREEN
-    speed = random.uniform(2.5, 4.5)
+    speed = random.uniform(1.5, 5.5)
     start_delay = random.randint(0, WINDOW_SIZE // 2)
 
     rain = MatrixRain(position_x, position_y, color, speed, start_delay)
@@ -176,6 +176,7 @@ for x in range(num_lines):
 
 
 async def play_sound():
+    # return
     # Load the sound
     thunder_sound = pygame.mixer.Sound('my_thunder.mp3')
     thunder_sound.set_volume(0.5)
