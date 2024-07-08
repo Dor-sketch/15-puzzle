@@ -13,9 +13,10 @@ pygame.mixer.music.load('rain.mp3')
 pygame.mixer.music.play(-1)  # -1 means loop indefinitely
 
 # Constants
-TILE_SIZE = 100
+WINDOW_WIDTH = 800
+WINDOW_HEIGHT = 800 * 9 // 16
+TILE_SIZE = WINDOW_HEIGHT // 5
 GRID_SIZE = 4
-WINDOW_SIZE = TILE_SIZE * GRID_SIZE + 400  # Additional space for buttons
 BUTTON_HEIGHT = 40
 
 # Colors
@@ -41,12 +42,12 @@ INSTRUCTIONS_FONT = pygame.font.Font('Courier.ttf', 14)
 MATRIX_GREEN = GREEN
 
 # Initialize position and velocity
-pos = [0, WINDOW_SIZE // 1.65]
+pos = [0, WINDOW_HEIGHT // 2]
 vel = [random.choice([-1, 1]) * random.uniform(1.5, 2.5), random.choice([-1, 1])
        * random.uniform(1.5, 2.5)]  # Increase the range of random velocities
 
 # Initialize screen
-screen = pygame.display.set_mode((WINDOW_SIZE, WINDOW_SIZE))
+screen = pygame.display.set_mode((800, 800* 9//16))
 pygame.display.set_caption("8-Puzzle Solver")
 grid_width = GRID_SIZE * TILE_SIZE
 grid_height = GRID_SIZE * TILE_SIZE
@@ -56,17 +57,17 @@ offset_y = (screen.get_height() - grid_height) // 2 - 50
 # Define buttons
 buttons = [
     {"label": "Shuffle", "rect": pygame.Rect(
-        10, WINDOW_SIZE - BUTTON_HEIGHT, 100, BUTTON_HEIGHT)},
+        10, WINDOW_HEIGHT - BUTTON_HEIGHT, 100, BUTTON_HEIGHT)},
     {"label": "Shuffle Factor", "rect": pygame.Rect(
-        340, WINDOW_SIZE - BUTTON_HEIGHT, 100, BUTTON_HEIGHT)},
+        340, WINDOW_HEIGHT - BUTTON_HEIGHT, 100, BUTTON_HEIGHT)},
     {"label": "Solve", "rect": pygame.Rect(
-        230, WINDOW_SIZE - BUTTON_HEIGHT, 100, BUTTON_HEIGHT)},
+        230, WINDOW_HEIGHT - BUTTON_HEIGHT, 100, BUTTON_HEIGHT)},
     {"label": "Reset", "rect": pygame.Rect(
-        120, WINDOW_SIZE - BUTTON_HEIGHT, 100, BUTTON_HEIGHT)},
+        120, WINDOW_HEIGHT - BUTTON_HEIGHT, 100, BUTTON_HEIGHT)},
     {"label": "Help", "rect": pygame.Rect(
-        450, WINDOW_SIZE - BUTTON_HEIGHT, 100, BUTTON_HEIGHT)},
+        450, WINDOW_HEIGHT - BUTTON_HEIGHT, 100, BUTTON_HEIGHT)},
     {"label": "Exit", "rect": pygame.Rect(
-        450, WINDOW_SIZE - BUTTON_HEIGHT, 100, BUTTON_HEIGHT)},
+        450, WINDOW_HEIGHT - BUTTON_HEIGHT, 100, BUTTON_HEIGHT)},
 ]
 
 # Create a lock
@@ -148,7 +149,7 @@ class MatrixRain:
             text.blit(alpha_surface, (0, 0),
                       special_flags=pygame.BLEND_RGBA_MULT)
             surface.blit(text, (self.x, self.y - i * text.get_height()))
-        if self.y > WINDOW_SIZE + self.max_trail_length * text_surface.get_height():
+        if self.y > WINDOW_HEIGHT + self.max_trail_length * text_surface.get_height():
             self.y = 0
             self.trail = []
             self.reset_delay = random.randint(0, int(10 // self.speed + 0.1))
@@ -157,7 +158,7 @@ class MatrixRain:
 # Calculate the number of lines based on the window size and the width of a character
 # Increase the divisor to reduce the number of lines
 # Increase the divisor# Initialize Matrix rain
-num_lines = min((WINDOW_SIZE // (MATRIX_FONT.size(' ')[0])), 60)
+num_lines = min((WINDOW_HEIGHT // (MATRIX_FONT.size(' ')[0])), 60)
 matrix_rain = []
 # Initialize position and velocity
 
@@ -169,7 +170,7 @@ for x in range(num_lines):
     position_y = 0
     color = MATRIX_GREEN
     speed = random.uniform(1.5, 5.5)
-    start_delay = random.randint(0, WINDOW_SIZE // 2)
+    start_delay = random.randint(0, WINDOW_HEIGHT // 2)
 
     rain = MatrixRain(position_x, position_y, color, speed, start_delay)
     matrix_rain.append(rain)
@@ -198,13 +199,13 @@ async def draw_winner_text(surface):
 
     # Reverse direction if the text hits the edge of the screen
     async with lock:
-        if (pos[0] <= 0 and vel[0] < 0) or (pos[0] + winner_text.get_width() >= WINDOW_SIZE and vel[0] > 0):
+        if (pos[0] <= 0 and vel[0] < 0) or (pos[0] + winner_text.get_width() >= WINDOW_HEIGHT and vel[0] > 0):
             vel[0] = -vel[0]
-        if (pos[1] <= 0 and vel[1] < 0) or (pos[1] + winner_text.get_height() >= WINDOW_SIZE and vel[1] > 0):
+        if (pos[1] <= 0 and vel[1] < 0) or (pos[1] + winner_text.get_height() >= WINDOW_HEIGHT and vel[1] > 0):
             vel[1] = -vel[1]
 
     # Create a semi-transparent surface
-    trans_surface = pygame.Surface((WINDOW_SIZE, WINDOW_SIZE), pygame.SRCALPHA)
+    trans_surface = pygame.Surface((WINDOW_HEIGHT, WINDOW_HEIGHT), pygame.SRCALPHA)
 
     # Draw a semi-transparent rectangle on the surface
     pygame.draw.rect(trans_surface, (50, 50, 50, 128), pygame.Rect(
@@ -379,7 +380,7 @@ class PuzzleGUI:
         for button in buttons:
             button_rect = button["rect"]
             button_rect.x = start_x
-            button_rect.y = WINDOW_SIZE - button_rect.height - 10  # 10 pixels from the bottom
+            button_rect.y = WINDOW_HEIGHT - button_rect.height - 10  # 10 pixels from the bottom
             await draw_shadow(screen, button_rect.move(5, 5), SHADOW_COLOR)
             await draw_gradient_rect(screen, button_rect, BUTTON_COLOR, BUTTON_COLOR_LIGHT)
             text = BUTTON_FONT.render(button["label"], True, BUTTON_TEXT_COLOR)

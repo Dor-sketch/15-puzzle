@@ -1,489 +1,346 @@
-<html lang="en-us"><script src="https://pygame-web.github.io/archives/0.9/pythons.js" type=module id=site data-LINES=57 data-CONSOLE=25 data-python=python3.12 data-os=vtx,fs,snd,gui async defer>#<!--
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-T7HFKFX0PR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-T7HFKFX0PR');
+    </script>
+    <!-- End Google tag (gtag.js) -->
 
-print("""
-Loading tiles from tiles.apk
-    Pygbag Version : 0.9.1
-    Template Version : 0.9.0
-    Python  : 3.12
-    CDN URL : https://pygame-web.github.io/archives/0.9/
-    Screen  : 1280x720
-    Title   : tiles
-    Folder  : tiles
-    Authors : pgw
-    SPDX-License-Identifier: cookiecutter.spdx
-
-""")
-
-
-# screen pixels (real, hardware)
-WIDTH=1024  # 1280
-HEIGHT=600  # 720
-
-# reference/idealized screen pixels
-REFX = 1980
-REFY = 1080
-
-def u(real, ref, v):
-    if abs(v)<0.9999999:
-        result = int( (float(real)/100.0) * (v*1000))
-        if v<0:
-            return real-result
-        return result
-    return int( (real/ref) * v )
-
-def ux(*argv):
-    global WIDTH, REFX
-    acc = 0
-    for v in argv:
-        acc += u(WIDTH, REFX, v)
-    return acc
-
-def uy(*argv):
-    global HEIGHT, REFY
-    acc = 0
-    for v in argv:
-        acc += u(HEIGHT, REFY, v)
-    return acc
-
-
-
-
-# do not rename
-async def custom_site():
-
-    import sys
-    import asyncio
-    import platform
-    import json
-    from pathlib import Path
-
-
-
-    import embed
-
-
-    platform.document.body.style.background = "#7f7f7f"
-
-    import pygame
-
-    def compose():
-        pygame.display.update()
-        window.chromakey(None, *screen.get_colorkey(), 40)
-
-    pygame.init()
-    pygame.font.init()
-
-    screen = pygame.display.set_mode([ux(.100),uy(.100)], pygame.SRCALPHA, 32)
-    screen.set_colorkey( (0,0,0,0), pygame.RLEACCEL )
-    screen.fill( (0,0,0,0) )
-
-    compose()
-
-    platform.window.transfer.hidden = true
-    platform.window.canvas.style.visibility = "visible"
-
-
-
-    apk = "tiles.apk"
-
-    bundle = "tiles"
-
-    # the C or js loader could do that but be explicit.
-    appdir = Path(f"/data/data/{bundle}") # /data/data/tiles
-    appdir.mkdir()
-
-
-    # mount apk
-
-    cfg = {
-        "io": "url",
-        "type":"mount",
-        "mount" : {
-            "point" : appdir.as_posix(),
-            "path" : "/",
-        },
-        "path" : f"/ => {appdir.as_posix()}",
-    }
-
-
-    track = platform.window.MM.prepare(apk, json.dumps(cfg))
-
-    marginx = ux(.020) # 20%
-    marginy = uy(.045) # 45%
-
-
-    def pg_bar(pos):
-        nonlocal marginx, marginy
-        # resolution of progress bar, recalculate since it may not be know yet.
-        total = track.len or 10  # avoid div0
-        slot = ux(.060)/ total # 60%
-
-        pygame.draw.rect(screen,(10,10,10),( marginx-ux(10), marginy-uy(10), (total*slot)+ux(20), uy(110) ) )
-        pygame.draw.rect(screen,(0,255,0), ( marginx, marginy, track.pos*slot, uy(90)) )
-
-    # wait until zip mount + overlayfs is complete
-    while not track.ready:
-        pg_bar(track.pos)
-        compose()
-        await asyncio.sleep(.1)
-
-    # fill it up in case it was cached and instant download
-    pg_bar(track.len)
-    compose()
-
-
-    # preloader will change dir and prepend it to sys.path
-    platform.run_main(PyConfig, loaderhome= appdir / "assets", loadermain=None)
-
-
-    # wait preloading complete
-    # that includes images and wasm compilation of bundled modules
-    while embed.counter()<0:
-        await asyncio.sleep(.1)
-
-    main = appdir / "assets" / "main.py"
-
-    # start async top level machinery and add a console.
-    await TopLevel_async_handler.start_toplevel(platform.shell, console=window.python.config.debug)
-
-    # now that apk is mounted we have access to font cache
-    # but we need to fill __file__ that is not yet set
-    __import__(__name__).__file__ = str(main)
-
-
-    # now make a prompt
-    fnt = pygame.sysfont.SysFont("freesans",  uy(80) )
-
-    def ui_callback(pkg, error=None):
-        nonlocal fnt
-        if error:
-            prompt = fnt.render(f"{error}", True, "black")
-        else:
-            prompt = fnt.render(f"Setting [{pkg}] up", True, "black")
-        pg_bar(track.len)
-        screen.blit(prompt, ( marginx+ ux(80), marginy - uy(10) ) )
-        compose()
-
-    # test/wait if user media interaction required
-    if not platform.window.MM.UME:
-
-        # now make a prompt
-        fnt = pygame.sysfont.SysFont("freesans",  uy(80) )
-        prompt = fnt.render("Ready to start !", True, "blue")
-        pg_bar(track.len)
-        screen.blit(prompt, ( marginx+ ux(80), marginy - uy(10) ) )
-        compose()
-        print("""
-        * Waiting for media user engagement : please click/touch page *
-    """)
-        while not platform.window.MM.UME:
-            await asyncio.sleep(.1)
-
-    # cleanup
-    screen.fill( (0,0,0,0) )
-    pygame.display.flip()
-
-    await shell.runpy(main, callback=ui_callback)
-
-
-
-import asyncio
-
-asyncio.run( custom_site() )
-
-
-
-
-
-
-
-
-
-
-
-
-# BEGIN BLOCK
-#
-# now this is the html part you can (and should) customize
-# It is not mandatory : pygame-script when it reads the first line (also called
-# shebang ) of above code create absolute minimal widget set
-# required for running with default rules
-#
-# do not alter that comment block it is separating python code from html code
-# =============================================================================
-# --></script><head><!--
-//=============================================================================
-//
-//
-//
-//
-//
-//
-//
-
-    {%- if cookiecutter.comment != "" -%}
-{{cookiecutter.comment}}
-    {% endif %}
-
---><script type="application/javascript">
-// END BLOCK
-
-
-
-// this dict is available under PyConfig.config from __main__
-
-config = {
-    xtermjs : "1" ,
-    _sdl2 : "canvas",
-    user_canvas : 0,
-    user_canvas_managed : 0,
-    ume_block : 1,
-    can_close : 1,
-    archive : "tiles",
-    gui_debug : 3,
-    cdn : "https://pygame-web.github.io/archives/0.9/",
-    autorun : 0,
-    PYBUILD : "3.12"
-}
-
-</script>
-
-    <title>tiles</title>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="viewport" content="height=device-height, initial-scale=1.0">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes"/>
-
-    <link rel="prefetch" href="https://pygame-web.github.io/archives/0.9/pythonrc.py">
-    <link rel="prefetch" href="https://pygame-web.github.io/archives/0.9/vt/xterm.js">
-    <link rel="prefetch" href="https://pygame-web.github.io/archives/0.9/vt/xterm-addon-image.js">
-    <link rel="prefetch" href="https://pygame-web.github.io/archives/0.9/vt/xterm-addon-image.js">
-
-
-    <link rel="icon" type="image/png" href="favicon.png" sizes="16x16">
-
+    <title>15 Puzzle Solver - The Matrix Project</title>
+    <meta name="description"
+        content="The Matrix Project is a comprehensive exploration of AI search algorithms, using the 8-Puzzle problem as a case study. The program includes implementations of famous search algorithms, such as BFS, IDDFS, GBFS, and A* search algorithms, and a custom heuristic for A* and GBFS. It features a GUI implemented in Python with tkinter and C++ with GTK, and falling code animation.">
+    <meta name="keywords"
+        content="15-puzzle, bfs, introduction to ai, 8-Puzzle, AI, Search Algorithms, BFS, IDDFS, GBFS, A*, Python, C++, GUI, tkinter, GTK, CSS, Falling Code, Animation, Open University">
+    <meta name="author" content="Dor Pascal">
+    <meta name="robots" content="index, follow">
+    <meta name="revisit-after" content="3 months">
+    <meta name="language" content="en">
+    <meta name="generator" content="Visual Studio Code">
+    <meta name="distribution" content="global">
+    <meta name="rating" content="general">
+    <meta property="og:title" content="15 Puzzle Solver - The Matrix Project">
+    <meta property="og:description"
+        content="The Matrix Project is a comprehensive exploration of AI search algorithms, using the 8-Puzzle problem as a case study. The program includes implementations of famous search algorithms, such as BFS, IDDFS, GBFS, and A* search algorithms, and a custom heuristic for A* and GBFS. It features a GUI implemented in Python with tkinter and C++ with GTK, and falling code animation.">
+    <meta property="og:url" content="https://dorpascal.com/15-puzzle">
+    <meta property="og:site_name" content="Dor Pascal">
+    <meta property="og:locale" content="he_IL">
+    <meta property="og:type" content="website">
+    <meta property="og:locale:alternate" content="en_US">
+    <meta property="og:locale:alternate" content="ar_IL">
+    <meta property="og:image" content="https://dorpascal.com/15-puzzle/cover.gif">
+    <meta name="theme-color" content="#6A82FB">
+    <link rel="icon" href="https://dorpascal.com/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="https://dorpascal.com/favicon.ico">
+    <link rel="canonical" href="https://dorpascal.com/15-puzzle">
     <style>
-        #status {
-            display: inline-block;
-            vertical-align: top;
-            margin-top: 20px;
-            margin-left: 30px;
-            font-weight: bold;
-            color: rgb(120, 120, 120);
-        }
-
-        #progress {
-            height: 20px;
-            width: 300px;
-        }
-
-        div.emscripten { text-align: center; }
-        div.emscripten_border { border: 1px solid black; }
-        div.thick_border { border: 4px solid black; }
-
-        /* the canvas *must not* have any border or padding, or mouse coords will be wrong */
-        /* average size of droid screen 470dp x 320dp  */
-        canvas.emscripten {
-            border: 0px none;
-            background-color: transparent;
-            width: 100%;
-            height: 100%;
-            z-index: 5;
-
-            padding: 0;
-            margin: 0 auto;
-
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            right: 0;
-        }
-
         body {
-            font-family: arial;
+            font-family: 'Courier New', monospace;
+            background-color: #000;
+            color: #8CFF57;
             margin: 0;
-            padding: none;
-            background-color:powderblue;
-        }
-
-        .topright{
-           position:absolute;
-           top:0px;
-           right:0px;
-        }
-
-        .bottomright {
-            position:absolute;
-            top: 40%;
-            right: 0px;
-        }
-
-        .center {
+            padding: 0;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
         }
 
-        .trinfo{
-           position:relative;
-           right:0px;
-           border: 1px solid black;
+        header {
+            background-color: #003300;
+            color: #8CFF57;
+            width: 100%;
+            padding: 1rem 0;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 255, 0, 0.3);
         }
 
-        .framed{
-           position:relative;
-           top:150px;
-           right:10px;
-           border: 1px solid black;
+        .container {
+            max-width: 800px;
+            padding: 2rem;
+            background: #022202;
+            box-shadow: 0 4px 8px rgba(0, 255, 0, 0.2);
+            border-radius: 8px;
+            margin: 2rem 0;
+            text-align: left;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: #8CFF57;
+            text-shadow: 0 0 5px #0F0;
+            animation: none;
+        }
+
+        p {
+            line-height: 1.6;
+            color: #8CFF57;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .image-center img {
+            display: block;
+            margin: 0 auto;
+        }
+
+        iframe {
+            width: 100%;
+            max-width: 800px;
+            aspect-ratio: 16/9;
+        }
+
+        a,
+        button {
+            color: #8CFF57;
+            background-color: #022202;
+            border: 1px solid #8CFF57;
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            transition: background-color 0.5s, color 0.5s;
+            text-shadow: 0 0 5px #0F0;
+        }
+
+        a:hover,
+        button:hover {
+            background-color: #8CFF57;
+            color: #000;
+            border-color: #000;
         }
     </style>
-
-    <script src="https://pygame-web.github.io/archives/0.9//browserfs.min.js"></script>
-
 </head>
 
 <body>
+    <header>
+        <h1>🕳️ _Matrix</h1>
+    </header>
+    <div class="container">
+        <h2>App Demo</h2>
+        <iframe src="./game.html" title="App Demo"></iframe>
+        <h2>Project Overview</h2>
+        <p>Project <strong>_Matrix</strong> (Line-Matrix) is a comprehensive exploration of AI search algorithms, using
+            the <em>8-Puzzle</em> problem as a case study. The program includes implementations of famous search
+            algorithms, such as BFS, IDDFS, GBFS, and A* search algorithms, and a custom heuristic for A* and GBFS. The
+            program was initially developed for the <strong>20551 Introduction to Artificial Intelligence</strong>
+            course at the <em>Open University of Israel</em>, and earned a perfect score of 100/100.</p>
 
-    <div id="transfer" align=center>
-<!--        <div class="spinner" id='spinner'></div> -->
-        <div class="emscripten" id="status">Downloading...</div>
-        <div class="emscripten">
-            <progress value="0" max="100" id="progress"></progress>
-        </div>
-    </div>
-
-
-    <canvas class="emscripten" id="canvas"
-width="1px"
-height="1px"
-    oncontextmenu="event.preventDefault()" tabindex=1>
-    </canvas>
-
-    <div id=html></div>
-
-    <div id=crt  class=bottomright >
-
-        <div id="system" hidden>
-            <div class="button-container">
-                <button id="aiostop" disabled>AIO ⏏︎</button>
-                <button id="aiopaused_true" disabled>AIO ■</button>
-                <button id="aiopaused_false" disabled>AIO ▶</button>
-                <button id="pygame_mixer_music_pause" disabled>Music ■</button>
-            </div>
-
-            <div class="button-container">
-                <div id=load_min>min</div>
-                <div id=load_avg>avg</div>
-                <div id=load_max>max</div>
-              <button id="load_rst" disabled>RESET</button>
-            </div>
-
-            <div id="level">(battery level unknown)</div>
-            <div id="stateBattery">(charging state unknown)</div>
-
+        <div class="center">
+            <img src="../images/usage_cubes.gif" title="AI8Puzzle" width="400" alt="AI8Puzzle GTK GUI">
+            <p><em>AI8Puzzle GTK GUI (C++)</em></p>
         </div>
 
-        <div id=box class="emscripten_border" hidden=true>
+        <h2>The 8-Puzzle Problem</h2>
+        <p>The 8-Puzzle problem is a classic AI problem, where the goal is to move the tiles from the initial state to
+            the target state, using the minimum number of moves. The puzzle consists of a 3x3 grid with 8 numbered tiles
+            and one empty space. The tiles are initially arranged in a random order, and the goal is to arrange them in
+            ascending order, with the empty space at the bottom right corner, or at the top left corner (see <a
+                href="https://en.wikipedia.org/wiki/15_puzzle" target="_blank">wikipedia</a>).</p>
 
-            <div id="info" class="trinfo"></div>
-
-            <iframe id="iframe" class="framed" name="iframe"
-width="470px" height="90%"
-allowtransparency="true"
-style="z-index: 10;"
-style="background: #FFFFFF;"
-frameborder="1"
-                allowfullscreen="true"
-                webkitallowfullscreen="true"
-                msallowfullscreen="true"
-                mozallowfullscreen="true"
-                sandbox="allow-same-origin allow-top-navigation allow-scripts allow-pointer-lock"
-                allow="autoplay; fullscreen *; geolocation; microphone; camera; midi; monetization; xr-spatial-tracking; gamepad; gyroscope; accelerometer; xr; cross-origin-isolated"
-                src="https://pygame-web.github.io/archives/0.9/empty.html"
-                scrolling="yes">
-            </iframe>
+        <div class="center">
+            <img src="../images/moving.gif" title="AI8Puzzle" width="400" alt="8-Puzzle Moving Tile">
+            <p><em>Example of 8-Puzzle: Moving tile 1 from the top left corner, then moving 4 to the middle</em></p>
         </div>
 
+        <h3>States</h3>
+        <pre><code class="language-python">class State:
+    def __init__(self, numbers: List[int], rows=3, cols=3):
+        self.numbers = numbers
+        self.rows, self.cols = rows, cols
+        self.matrix = self._create_matrix(numbers, rows, cols)
+
+    def _create_matrix(self, numbers, rows, cols):
+        return [[numbers[i * cols + j] for j in range(cols)] for i in range(rows)]
+</code></pre>
+        <p>The <code>State</code> class is responsible for representing a state in the world. A state, in this specific
+            problem, is a configuration of the puzzle. Each puzzle configuration converts a linear array of tiles into a
+            2D matrix. This design choice simplifies both the visualization of the puzzle state and the implementation
+            of moves within the puzzle space.</p>
+
+        <h3>Initial State</h3>
+        <div class="center">
+            <img src="../images/cubes_theme.png" title="AI8Puzzle" width="400" alt="Shuffled 8-Puzzle">
+            <p><em>Example of shuffled 8-Puzzle, GUI with cubes theme</em></p>
+        </div>
+        <pre><code class="language-python">def main():
+    try:
+        initial_numbers = [int(num) for num in sys.argv[3:]]
+        initial_state = State(initial_numbers)
+    except ValueError:
+        print("All arguments must be integers.")
+        sys.exit(1)
+
+    print(BFS(initial_state))
+    print(IDDFS(initial_state))
+    print(GBFS(initial_state))
+    print(AStar(initial_state))
+</code></pre>
+        <p>The initial state, the one without a <code>parent</code> attribute, is defined based on the user input and
+            starts as the tree root. The <code>main</code> function is responsible for parsing and initiating the
+            <code>initial_state</code> instance, then it prints the result.</p>
+
+        <h3>Actions and Transition Model</h3>
+        <div class="center">
+            <img src="../images/trans.png" title="AI8Puzzle" width="400" alt="8-Puzzle Transition Model">
+            <p><em>Clicking the colored tiles will move them to the empty space</em></p>
+        </div>
+        <pre><code class="language-python">def generate_children(self):
+    blank_x, blank_y = self.find_number_in_matrix(0)
+    children = []
+    for dx, dy in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
+        x, y = blank_x + dx, blank_y + dy
+        if 0 <= x < self.rows and 0 <= y < self.cols:
+            new_numbers = self.numbers.copy()
+            blank_index, new_index = blank_x * self.cols + blank_y, x * self.cols + y
+            new_numbers[blank_index], new_numbers[new_index] = new_numbers[new_index], new_numbers[blank_index]
+            children.append(State(new_numbers))
+    return children
+</code></pre>
+        <p>The actions and transition model are implemented inside the <code>state</code> class
+            <code>generate_children</code>. The <code>State</code> class also includes methods for generating children
+            states, considering possible moves from the current state. This method implements the Actions and the
+            transition model.</p>
+
+        <h3>Goal States</h3>
+        <div class="center">
+            <img src="../images/reaching_goal.gif" title="AI8Puzzle" width="400" alt="8-Puzzle Goal State">
+            <p><em>Path to goal state of the 8-Puzzle</em></p>
+        </div>
+        <p>The problem includes two goal states, defined as plain <code>List[int]</code> to match the program
+            initial_state input format.</p>
+        <pre><code class="language-python">TARGET_A = [0, 1, 2, 3, 4, 5, 6, 7, 8]
+TARGET_B = [1, 2, 3, 4, 5, 6, 7, 8, 0]
+</code></pre>
+
+        <h3>Action Cost</h3>
+        <p>Each action performed by <code>generate_children</code> above costs 1, so <code>1</code> is the action cost
+            of the problem. The cost is managed in the <code>Node</code> class which will be described below.</p>
+
+        <h2>Running the Program</h2>
+        <div class="center">
+            <img src="../images/reduced_mov.gif" title="AI8Puzzle" width="400" alt="AI8Puzzle Animation">
+            <img src="../images/neu_theme.jpg" title="AI8Puzzle" width="400" alt="AI8Puzzle Theme">
+            <img src="../images/neu_theme2.png" title="AI8Puzzle" width="400" alt="AI8Puzzle Theme">
+            <p><em>theMatrix theme GUI</em></p>
+        </div>
+        <p>The program supports both interactive GUI and command-line interfaces. Two GUI versions are available: one
+            implemented in Python using the <code>tkinter</code> library, and another implemented in C++ using the
+            <code>GTK</code> library. The Python version is easier to use and has more features, while the C++ version
+            offers cool visual effects and supports <code>CSS</code> styling.</p>
+        <p>To run the C++ GUI, first make sure you have <code>GTK</code> installed. Then navigate to the directory
+            containing <code>AI8Puzzle</code> and execute the following command in the terminal:</p>
+        <pre><code class="language-bash">./make && ./main <-s number of tiles></code></pre>
+        <p>The <code>-s</code> flag is optional and allows you to set the number of tiles in the puzzle (including the
+            blank tile). The default is 9 tiles. The program will generate a random solvable puzzle and open a window
+            where you can interact with the puzzle.</p>
+        <div class="center">
+            <img src="../images/elegant_theme.png" title="AI8Puzzle" width="400" alt="Elegant Theme GUI">
+            <p><em>Elegant theme GUI</em></p>
+        </div>
+        <p>You can move the tiles by clicking on them, or use the keyboard arrow keys. You can also use the following
+            shortcuts:</p>
+        <ul>
+            <li><code>ctrl + n</code> - generate a new random puzzle (shuffled)</li>
+            <li><code>ctrl + s</code> - solve the puzzle using the BFS algorithm</li>
+            <li><code>ctrl + r</code> - reset the puzzle (default goal state)</li>
+            <li><code>ctrl + q</code> - quit the program</li>
+            <li><code>ctrl + t</code> - choose new theme from <code>css</code> file</li>
+        </ul>
+        <div class="center">
+            <img src="../images/menu.png" title="AI8Puzzle" alt="Menu (C++)">
+            <p><em>Menu (C++)</em></p>
+        </div>
+        <p>To run the Python GUI, first make sure you have <code>tkinter</code> installed. Then navigate to the
+            directory containing <code>Tiles.py</code> and execute the following command in the terminal:</p>
+        <pre><code class="language-bash">python3 GUI.py</code></pre>
+        <div class="center">
+            <img src="../images/solution_7_moves_white.gif" title="AI8Puzzle" width="240"
+                alt="AI8Puzzle Solution 7 Moves">
+            <img src="../images/solution_7_moves.gif" title="AI8Puzzle" width="240" alt="AI8Puzzle Solution 7 Moves">
+        </div>
+        <p>To run the program in the command-line interface mode, navigate to the directory containing
+            <code>Tiles.py</code> and execute the following command in the terminal:</p>
+        <pre><code class="language-bash">python3 Tiles.py <9 space-separated numbers representing the initial state></code></pre>
+        <p>The program will print the results for each algorithm in the required format:</p>
+        <pre><code class="language-bash"><Algorithm name>
+<Explored count - number of expanded nodes>
+<Solution Path></code></pre>
+
+        <h2>Technical Details</h2>
+        <pre><code class="language-python">class SearchAlgorithm:
+    class ExploredSet:
+        def __init__(self, initial_state, name=None):
+            self.root_node = Node(initial_state)
+            self.frontier = None
+            self.explored = self.ExploredSet()
+            self.name = name
+            self.solution_node = None
+</code></pre>
+        <p>The <code>SearchAlgorithm</code> class and its nested <code>ExploredSet</code> class, along with other
+            relevant details of the technical implementation, are included in the source code of the project. For more
+            details, refer to the project's documentation and source code.</p>
+
+        <h3>Node Class</h3>
+        <p>The node class is responsible for representing a node in the search tree. The program uses two types of
+            nodes: a base <code>Node</code> class and a derived <code>PriorityQueueNode</code> class. Each
+            <code>Node</code> instance stores the current state, the parent node, and the path cost <code>g(n)</code>.
+            In addition, the <code>PriorityQueueNode</code> class, used in A* and GBFS, includes a priority attribute
+            for the heuristic value <code>h(n)</code>.</p>
+        <pre><code class="language-python">class PriorityQueueNode(Node):
+    def __init__(self, node):
+        super().__init__(node.state, node.parent)
+        self.priority = None
+
+    def __lt__(self, other):
+        return self.priority < other.priority
+</code></pre>
+
+        <h3>Search Data Structures</h3>
+        <p>The <code>Frontier</code> class acts as the fringe or the boundary between explored and unexplored states. It
+            is a priority queue (minimum heap) in A* and GBFS, and a simple queue or stack in BFS and IDDFS,
+            respectively. In BFS it's implemented as a FIFO queue, while in IDDFS as a stack.</p>
+        <pre><code class="language-python">class GBFS(SearchAlgorithm):
+    class GBFSFrontier(Frontier):
+        def set_priority(self, node):
+            return node.my_heuristic()
+</code></pre>
+        <p>The <code>GBFSFrontier</code> sets only the heuristic to the priority, thus <code>f(n) = h(n)</code>.</p>
+        <pre><code class="language-python">class AStar(SearchAlgorithm):
+    class AStarFrontier(Frontier):
+        def set_priority(self, node):
+            return node.cost + node.my_heuristic()
+</code></pre>
+        <p>The <code>AStarFrontier</code> adds the node cost to its priority, thus <code>f(n) = h(n) + g(n)</code>.</p>
+
+        <h3>Custom A* and GBFS Heuristics</h3>
+        <p>The program includes custom heuristics for A* and GBFS. The heuristics are implemented as methods inside the
+            <code>PriorityQueueNode</code> class and are used to calculate the estimated cost from the current state to
+            the target state. The heuristics are used to guide the search algorithms in finding the optimal path to the
+            target state.</p>
+
+        <h2>Examples</h2>
+        <div class="image-center">
+            <img src="../images/output_example.png" title="AI8Puzzle Output Example" alt="Output Example">
+            <img src="../images/output_example2.png" title="AI8Puzzle Output Example 2" alt="Output Example 2">
+        </div>
+
+        <h2>Acknowledgments</h2>
+        <p>Inspired by the book <em>"Artificial Intelligence: A Modern Approach"</em> by Stuart Russell and Peter
+            Norvig. Thanks to the Open University of Israel for the opportunity to work on this project.</p>
+
+        <h2>License</h2>
+        <p>This project is licensed under the MIT License - see the <a href="LICENSE">LICENSE</a> file for details.</p>
     </div>
-
-
-    <div id="dlg" hidden>
-        <input type="file" id="dlg_multifile" multiple accept="image/*">
-        <label for="dlg_multifile">Select files</label>
-    </div>
-
-    <div id="pyconsole">
-        <div id="terminal" tabIndex=1 align="left"></div>
-    </div>
-
-    <script type="application/javascript">
-
-    async function custom_onload(debug_hidden) {
-        // this is called before anything python is loaded
-        // make your js customization here
-        console.log(__FILE__, "custom_onload")
-
-        pyconsole.hidden = debug_hidden
-        system.hidden = debug_hidden
-        transfer.hidden = debug_hidden
-        info.hidden = debug_hidden
-        box.hidden =  debug_hidden
-
-    }
-
-    function custom_prerun(){
-        // no python main and no (MEMFS + VFS) yet.
-        console.log(__FILE__, "custom_prerun")
-
-    }
-
-    function custom_postrun(){
-        // python main and no VFS filesystem yet.
-        console.log(__FILE__, "custom_postrun")
-
-        // prevent ff horizontal scroll
-        window.addEventListener("keydown", function(e) {
-            if(["Space","ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].indexOf(e.code) > -1) {
-                if (!python.config.debug)
-                    e.preventDefault();
-            }
-        }, false);
-
-    }
-
-    function debug() {
-        // allow to gain access to dev tools from js console
-        // but only on desktop. difficult to reach when in iframe
-        python.config.debug = true
-        custom_onload(false)
-        Module.PyRun_SimpleString("shell.uptime()")
-        window_resize()
-    }
-
-    function info_inline(data){
-        document.getElementById("info").innerHTML = data
-    }
-
-    function info_online(url) {
-        // display info about current APK
-        fetch( url /*, options */)
-            .then((response) => response.text())
-            .then((html) => {
-                info_inline(html);
-        })
-        .catch((error) => {
-            console.warn(error);
-        });
-    }
-
-    function frame_online(url) {
-        window.frames["iframe"].location = url;
-    }
-
-    </script>
-
 </body>
+
 </html>
