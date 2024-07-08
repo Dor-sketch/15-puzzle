@@ -177,7 +177,8 @@ for x in range(num_lines):
 
 
 async def play_sound():
-    # return
+    return
+    # Bug: The sound freezes the app when running in browser
     # Load the sound
     thunder_sound = pygame.mixer.Sound('my_thunder.mp3')
     thunder_sound.set_volume(0.5)
