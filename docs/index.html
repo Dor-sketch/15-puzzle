@@ -36,7 +36,7 @@
     <meta property="og:locale:alternate" content="en_US">
     <meta property="og:locale:alternate" content="ar_IL">
     <meta property="og:image" content="https://dorpascal.com/15-puzzle/cover.gif">
-    <meta name="theme-color" content="#6A82FB">
+    <meta name="theme-color" content="#003300">
     <link rel="icon" href="https://dorpascal.com/favicon.ico" type="image/x-icon">
     <link rel="apple-touch-icon" href="https://dorpascal.com/favicon.ico">
     <link rel="canonical" href="https://dorpascal.com/15-puzzle">
@@ -136,7 +136,7 @@
             course at the <em>Open University of Israel</em>, and earned a perfect score of 100/100.</p>
 
         <div class="center">
-            <img src="../images/usage_cubes.gif" title="AI8Puzzle" width="400" alt="AI8Puzzle GTK GUI">
+            <img src="https:dorpascal.com/15-puzzle/images/usage_cubes.gif" title="AI8Puzzle" width="400" alt="AI8Puzzle GTK GUI">
             <p><em>AI8Puzzle GTK GUI (C++)</em></p>
         </div>
 
@@ -148,7 +148,7 @@
                 href="https://en.wikipedia.org/wiki/15_puzzle" target="_blank">wikipedia</a>).</p>
 
         <div class="center">
-            <img src="../images/moving.gif" title="AI8Puzzle" width="400" alt="8-Puzzle Moving Tile">
+            <img src="./images/moving.gif" title="AI8Puzzle" width="400" alt="8-Puzzle Moving Tile">
             <p><em>Example of 8-Puzzle: Moving tile 1 from the top left corner, then moving 4 to the middle</em></p>
         </div>
 
@@ -169,7 +169,7 @@
 
         <h3>Initial State</h3>
         <div class="center">
-            <img src="../images/cubes_theme.png" title="AI8Puzzle" width="400" alt="Shuffled 8-Puzzle">
+            <img src="./images/cubes_theme.png" title="AI8Puzzle" width="400" alt="Shuffled 8-Puzzle">
             <p><em>Example of shuffled 8-Puzzle, GUI with cubes theme</em></p>
         </div>
         <pre><code class="language-python">def main():
@@ -191,7 +191,7 @@
 
         <h3>Actions and Transition Model</h3>
         <div class="center">
-            <img src="../images/trans.png" title="AI8Puzzle" width="400" alt="8-Puzzle Transition Model">
+            <img src="./images/trans.png" title="AI8Puzzle" width="400" alt="8-Puzzle Transition Model">
             <p><em>Clicking the colored tiles will move them to the empty space</em></p>
         </div>
         <pre><code class="language-python">def generate_children(self):
@@ -213,7 +213,7 @@
 
         <h3>Goal States</h3>
         <div class="center">
-            <img src="../images/reaching_goal.gif" title="AI8Puzzle" width="400" alt="8-Puzzle Goal State">
+            <img src="./images/reaching_goal.gif" title="AI8Puzzle" width="400" alt="8-Puzzle Goal State">
             <p><em>Path to goal state of the 8-Puzzle</em></p>
         </div>
         <p>The problem includes two goal states, defined as plain <code>List[int]</code> to match the program
@@ -228,9 +228,9 @@ TARGET_B = [1, 2, 3, 4, 5, 6, 7, 8, 0]
 
         <h2>Running the Program</h2>
         <div class="center">
-            <img src="../images/reduced_mov.gif" title="AI8Puzzle" width="400" alt="AI8Puzzle Animation">
-            <img src="../images/neu_theme.jpg" title="AI8Puzzle" width="400" alt="AI8Puzzle Theme">
-            <img src="../images/neu_theme2.png" title="AI8Puzzle" width="400" alt="AI8Puzzle Theme">
+            <img src="./images/reduced_mov.gif" title="AI8Puzzle" width="400" alt="AI8Puzzle Animation">
+            <img src="./images/neu_theme.jpg" title="AI8Puzzle" width="400" alt="AI8Puzzle Theme">
+            <img src="./images/neu_theme2.png" title="AI8Puzzle" width="400" alt="AI8Puzzle Theme">
             <p><em>theMatrix theme GUI</em></p>
         </div>
         <p>The program supports both interactive GUI and command-line interfaces. Two GUI versions are available: one
@@ -244,7 +244,7 @@ TARGET_B = [1, 2, 3, 4, 5, 6, 7, 8, 0]
             blank tile). The default is 9 tiles. The program will generate a random solvable puzzle and open a window
             where you can interact with the puzzle.</p>
         <div class="center">
-            <img src="../images/elegant_theme.png" title="AI8Puzzle" width="400" alt="Elegant Theme GUI">
+            <img src="./images/elegant_theme.png" title="AI8Puzzle" width="400" alt="Elegant Theme GUI">
             <p><em>Elegant theme GUI</em></p>
         </div>
         <p>You can move the tiles by clicking on them, or use the keyboard arrow keys. You can also use the following
@@ -257,16 +257,16 @@ TARGET_B = [1, 2, 3, 4, 5, 6, 7, 8, 0]
             <li><code>ctrl + t</code> - choose new theme from <code>css</code> file</li>
         </ul>
         <div class="center">
-            <img src="../images/menu.png" title="AI8Puzzle" alt="Menu (C++)">
+            <img src="./images/menu.png" title="AI8Puzzle" alt="Menu (C++)">
             <p><em>Menu (C++)</em></p>
         </div>
         <p>To run the Python GUI, first make sure you have <code>tkinter</code> installed. Then navigate to the
             directory containing <code>Tiles.py</code> and execute the following command in the terminal:</p>
         <pre><code class="language-bash">python3 GUI.py</code></pre>
         <div class="center">
-            <img src="../images/solution_7_moves_white.gif" title="AI8Puzzle" width="240"
+            <img src="./images/solution_7_moves_white.gif" title="AI8Puzzle" width="240"
                 alt="AI8Puzzle Solution 7 Moves">
-            <img src="../images/solution_7_moves.gif" title="AI8Puzzle" width="240" alt="AI8Puzzle Solution 7 Moves">
+            <img src="./images/solution_7_moves.gif" title="AI8Puzzle" width="240" alt="AI8Puzzle Solution 7 Moves">
         </div>
         <p>To run the program in the command-line interface mode, navigate to the directory containing
             <code>Tiles.py</code> and execute the following command in the terminal:</p>
@@ -330,8 +330,8 @@ TARGET_B = [1, 2, 3, 4, 5, 6, 7, 8, 0]
 
         <h2>Examples</h2>
         <div class="image-center">
-            <img src="../images/output_example.png" title="AI8Puzzle Output Example" alt="Output Example">
-            <img src="../images/output_example2.png" title="AI8Puzzle Output Example 2" alt="Output Example 2">
+            <img src="./images/output_example.png" title="AI8Puzzle Output Example" alt="Output Example">
+            <img src="./images/output_example2.png" title="AI8Puzzle Output Example 2" alt="Output Example 2">
         </div>
 
         <h2>Acknowledgments</h2>
@@ -340,6 +340,10 @@ TARGET_B = [1, 2, 3, 4, 5, 6, 7, 8, 0]
 
         <h2>License</h2>
         <p>This project is licensed under the MIT License - see the <a href="LICENSE">LICENSE</a> file for details.</p>
+
+        <footer>
+        <p class="center">🕳️ <a href="https://dorpascal.com">Dor Pascal</a> © 2024</p>
+        </footer>
     </div>
 </body>
 
