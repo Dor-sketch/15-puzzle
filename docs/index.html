@@ -43,7 +43,7 @@
     <style>
         body {
             font-family: 'Courier New', monospace;
-            background-color: #000;
+            background-color: #212121;
             color: #8CFF57;
             margin: 0;
             padding: 0;
@@ -51,6 +51,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            overflow-x: hidden;
         }
 
         header {
@@ -62,14 +63,18 @@
             box-shadow: 0 2px 5px rgba(0, 255, 0, 0.3);
         }
 
-        .container {
-            max-width: 800px;
+        main, .container {
             padding: 2rem;
             background: #022202;
             box-shadow: 0 4px 8px rgba(0, 255, 0, 0.2);
             border-radius: 8px;
-            margin: 2rem 0;
             text-align: left;
+            width: 100%;
+            margin: 1rem 0;
+            max-width: calc(min(90%, 800px));
+        }
+
+        main {
             animation: fadeIn 2s ease-in-out;
         }
 
@@ -118,6 +123,16 @@
             color: #000;
             border-color: #000;
         }
+
+        @media (max-width: 768px) {
+            main, .container {
+                padding: 1rem;
+            }
+
+            header {
+                padding: 0.5rem 0;
+            }
+        }
     </style>
 </head>
 
@@ -128,6 +143,8 @@
     <div class="container">
         <h2>App Demo</h2>
         <iframe src="./game.html" title="App Demo"></iframe>
+    </div>
+    <main>
         <h2>Project Overview</h2>
         <p>Project <strong>_Matrix</strong> (Line-Matrix) is a comprehensive exploration of AI search algorithms, using
             the <em>8-Puzzle</em> problem as a case study. The program includes implementations of famous search
@@ -136,7 +153,8 @@
             course at the <em>Open University of Israel</em>, and earned a perfect score of 100/100.</p>
 
         <div class="center">
-            <img src="https:dorpascal.com/15-puzzle/images/usage_cubes.gif" title="AI8Puzzle" width="400" alt="AI8Puzzle GTK GUI">
+            <img src="https:dorpascal.com/15-puzzle/images/usage_cubes.gif" title="AI8Puzzle" width="400"
+                alt="AI8Puzzle GTK GUI">
             <p><em>AI8Puzzle GTK GUI (C++)</em></p>
         </div>
 
@@ -187,7 +205,8 @@
 </code></pre>
         <p>The initial state, the one without a <code>parent</code> attribute, is defined based on the user input and
             starts as the tree root. The <code>main</code> function is responsible for parsing and initiating the
-            <code>initial_state</code> instance, then it prints the result.</p>
+            <code>initial_state</code> instance, then it prints the result.
+        </p>
 
         <h3>Actions and Transition Model</h3>
         <div class="center">
@@ -200,7 +219,7 @@
     for dx, dy in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
         x, y = blank_x + dx, blank_y + dy
         if 0 <= x < self.rows and 0 <= y < self.cols:
-            new_numbers = self.numbers.copy()
+            new_numbers = self.numbers.copy();
             blank_index, new_index = blank_x * self.cols + blank_y, x * self.cols + y
             new_numbers[blank_index], new_numbers[new_index] = new_numbers[new_index], new_numbers[blank_index]
             children.append(State(new_numbers))
@@ -209,7 +228,8 @@
         <p>The actions and transition model are implemented inside the <code>state</code> class
             <code>generate_children</code>. The <code>State</code> class also includes methods for generating children
             states, considering possible moves from the current state. This method implements the Actions and the
-            transition model.</p>
+            transition model.
+        </p>
 
         <h3>Goal States</h3>
         <div class="center">
@@ -236,7 +256,8 @@ TARGET_B = [1, 2, 3, 4, 5, 6, 7, 8, 0]
         <p>The program supports both interactive GUI and command-line interfaces. Two GUI versions are available: one
             implemented in Python using the <code>tkinter</code> library, and another implemented in C++ using the
             <code>GTK</code> library. The Python version is easier to use and has more features, while the C++ version
-            offers cool visual effects and supports <code>CSS</code> styling.</p>
+            offers cool visual effects and supports <code>CSS</code> styling.
+        </p>
         <p>To run the C++ GUI, first make sure you have <code>GTK</code> installed. Then navigate to the directory
             containing <code>AI8Puzzle</code> and execute the following command in the terminal:</p>
         <pre><code class="language-bash">./make && ./main <-s number of tiles></code></pre>
@@ -269,7 +290,8 @@ TARGET_B = [1, 2, 3, 4, 5, 6, 7, 8, 0]
             <img src="./images/solution_7_moves.gif" title="AI8Puzzle" width="240" alt="AI8Puzzle Solution 7 Moves">
         </div>
         <p>To run the program in the command-line interface mode, navigate to the directory containing
-            <code>Tiles.py</code> and execute the following command in the terminal:</p>
+            <code>Tiles.py</code> and execute the following command in the terminal:
+        </p>
         <pre><code class="language-bash">python3 Tiles.py <9 space-separated numbers representing the initial state></code></pre>
         <p>The program will print the results for each algorithm in the required format:</p>
         <pre><code class="language-bash"><Algorithm name>
@@ -295,7 +317,8 @@ TARGET_B = [1, 2, 3, 4, 5, 6, 7, 8, 0]
             nodes: a base <code>Node</code> class and a derived <code>PriorityQueueNode</code> class. Each
             <code>Node</code> instance stores the current state, the parent node, and the path cost <code>g(n)</code>.
             In addition, the <code>PriorityQueueNode</code> class, used in A* and GBFS, includes a priority attribute
-            for the heuristic value <code>h(n)</code>.</p>
+            for the heuristic value <code>h(n)</code>.
+        </p>
         <pre><code class="language-python">class PriorityQueueNode(Node):
     def __init__(self, node):
         super().__init__(node.state, node.parent)
@@ -326,7 +349,8 @@ TARGET_B = [1, 2, 3, 4, 5, 6, 7, 8, 0]
         <p>The program includes custom heuristics for A* and GBFS. The heuristics are implemented as methods inside the
             <code>PriorityQueueNode</code> class and are used to calculate the estimated cost from the current state to
             the target state. The heuristics are used to guide the search algorithms in finding the optimal path to the
-            target state.</p>
+            target state.
+        </p>
 
         <h2>Examples</h2>
         <div class="image-center">
@@ -341,10 +365,10 @@ TARGET_B = [1, 2, 3, 4, 5, 6, 7, 8, 0]
         <h2>License</h2>
         <p>This project is licensed under the MIT License - see the <a href="LICENSE">LICENSE</a> file for details.</p>
 
+    </main>
         <footer>
-        <p class="center">🕳️ <a href="https://dorpascal.com">Dor Pascal</a> © 2024</p>
+            <p class="center">🕳️ <a href="https://dorpascal.com">Dor Pascal</a> © 2024</p>
         </footer>
-    </div>
 </body>
 
 </html>
