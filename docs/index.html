@@ -30,12 +30,12 @@
     <meta property="og:description"
         content="The Matrix Project is a comprehensive exploration of AI search algorithms, using the 8-Puzzle problem as a case study. The program includes implementations of famous search algorithms, such as BFS, IDDFS, GBFS, and A* search algorithms, and a custom heuristic for A* and GBFS. It features a GUI implemented in Python with tkinter and C++ with GTK, and falling code animation.">
     <meta property="og:url" content="https://dorpascal.com/15-puzzle">
-    <meta property="og:site_name" content="Dor Pascal">
+    <meta property="og:site_name" content="15 Puzzle Solver - The Matrix Project">
     <meta property="og:locale" content="he_IL">
     <meta property="og:type" content="website">
     <meta property="og:locale:alternate" content="en_US">
     <meta property="og:locale:alternate" content="ar_IL">
-    <meta property="og:image" content="https://dorpascal.com/15-puzzle/cover.gif">
+    <meta property="og:image" content="https://dorpascal.com/15-puzzle/images/cover.gif">
     <meta name="theme-color" content="#003300">
     <link rel="icon" href="https://dorpascal.com/favicon.ico" type="image/x-icon">
     <link rel="apple-touch-icon" href="https://dorpascal.com/favicon.ico">
@@ -78,9 +78,7 @@
             animation: fadeIn 2s ease-in-out;
         }
 
-        h1,
-        h2,
-        h3 {
+        h1, h2, h3 {
             color: #8CFF57;
             text-shadow: 0 0 5px #0F0;
             animation: none;
@@ -106,8 +104,7 @@
             aspect-ratio: 16/9;
         }
 
-        a,
-        button {
+        a, button {
             color: #8CFF57;
             background-color: #022202;
             border: 1px solid #8CFF57;
@@ -117,8 +114,7 @@
             text-shadow: 0 0 5px #0F0;
         }
 
-        a:hover,
-        button:hover {
+        a:hover, button:hover {
             background-color: #8CFF57;
             color: #000;
             border-color: #000;
@@ -164,8 +160,7 @@
             course at the <em>Open University of Israel</em>, and earned a perfect score of 100/100.</p>
 
         <div class="center">
-            <img src="./images/usage_cubes.gif" title="AI8Puzzle" max-width="90%"
-                alt="AI8Puzzle GTK GUI">
+            <img src="./images/usage_cubes.gif" title="AI8Puzzle" style="max-width: 90%;" alt="AI8Puzzle GTK GUI">
             <p><em>AI8Puzzle GTK GUI (C++)</em></p>
         </div>
 
@@ -177,7 +172,7 @@
                 href="https://en.wikipedia.org/wiki/15_puzzle" target="_blank">wikipedia</a>).</p>
 
         <div class="center">
-            <img src="./images/moving.gif" title="AI8Puzzle" max-width="90%" alt="8-Puzzle Moving Tile">
+            <img src="./images/moving.gif" title="AI8Puzzle" style="max-width: 90%;" alt="8-Puzzle Moving Tile">
             <p><em>Example of 8-Puzzle: Moving tile 1 from the top left corner, then moving 4 to the middle</em></p>
         </div>
 
@@ -198,7 +193,7 @@
 
         <h3>Initial State</h3>
         <div class="center">
-            <img src="./images/cubes_theme.png" title="AI8Puzzle" width="80%" alt="Shuffled 8-Puzzle">
+            <img src="./images/cubes_theme.png" title="AI8Puzzle" style="width: 80%;" alt="Shuffled 8-Puzzle">
             <p><em>Example of shuffled 8-Puzzle, GUI with cubes theme</em></p>
         </div>
         <pre><code class="language-python">def main():
@@ -221,30 +216,30 @@
 
         <h3>Actions and Transition Model</h3>
         <div class="center">
-            <img src="./images/trans.png" title="AI8Puzzle" max-width="90%" alt="8-Puzzle Transition Model">
+            <img src="./images/trans.png" title="AI8Puzzle" style="max-width: 90%;" alt="8-Puzzle Transition Model">
             <p><em>Clicking the colored tiles will move them to the empty space</em></p>
         </div>
         <pre><code class="language-python">def generate_children(self):
-    blank_x, blank_y = self.find_number_in_matrix(0)
-    children = []
-    for dx, dy in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
-        x, y = blank_x + dx, blank_y + dy
-        if 0 <= x < self.rows and 0 <= y < self.cols:
-            new_numbers = self.numbers.copy();
-            blank_index, new_index = blank_x * self.cols + blank_y, x * self.cols + y
-            new_numbers[blank_index], new_numbers[new_index] = new_numbers[new_index], new_numbers[blank_index]
-            children.append(State(new_numbers))
-    return children
-</code></pre>
-        <p>The actions and transition model are implemented inside the <code>state</code> class
-            <code>generate_children</code>. The <code>State</code> class also includes methods for generating children
+            blank_x, blank_y = self.find_number_in_matrix(0)
+            children = []
+            for dx, dy in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
+                x, y = blank_x + dx, blank_y + dy
+                if 0 &lt;= x &lt; self.rows and 0 &lt;= y &lt; self.cols:
+                    new_numbers = self.numbers.copy()
+                    blank_index, new_index = blank_x * self.cols + blank_y, x * self.cols + y
+                    new_numbers[blank_index], new_numbers[new_index] = new_numbers[new_index], new_numbers[blank_index]
+                    children.append(State(new_numbers))
+            return children
+        </code></pre>
+        <p>The actions and transition model are implemented inside the <code>State</code> class's
+            <code>generate_children</code> method. The <code>State</code> class also includes methods for generating children
             states, considering possible moves from the current state. This method implements the Actions and the
             transition model.
         </p>
 
         <h3>Goal States</h3>
         <div class="center">
-            <img src="./images/reaching_goal.gif" title="AI8Puzzle" max-width="90%" alt="8-Puzzle Goal State">
+            <img src="./images/reaching_goal.gif" title="AI8Puzzle" style="max-width: 90%;" alt="8-Puzzle Goal State">
             <p><em>Path to goal state of the 8-Puzzle</em></p>
         </div>
         <p>The problem includes two goal states, defined as plain <code>List[int]</code> to match the program
@@ -259,9 +254,9 @@ TARGET_B = [1, 2, 3, 4, 5, 6, 7, 8, 0]
 
         <h2>Running the Program</h2>
         <div class="center">
-            <img src="./images/reduced_mov.gif" title="AI8Puzzle" max-width="90%" alt="AI8Puzzle Animation">
-            <img src="./images/neu_theme.jpg" title="AI8Puzzle" max-width="90%" alt="AI8Puzzle Theme">
-            <img src="./images/neu_theme2.png" title="AI8Puzzle" max-width="90%" alt="AI8Puzzle Theme">
+            <img src="./images/reduced_mov.gif" title="AI8Puzzle" style="max-width: 90%;" alt="AI8Puzzle Animation">
+            <img src="./images/neu_theme.jpg" title="AI8Puzzle" style="max-width: 90%;" alt="AI8Puzzle Theme">
+            <img src="./images/neu_theme2.png" title="AI8Puzzle" style="max-width: 90%;" alt="AI8Puzzle Theme">
             <p><em>theMatrix theme GUI</em></p>
         </div>
         <p>The program supports both interactive GUI and command-line interfaces. Two GUI versions are available: one
@@ -271,12 +266,12 @@ TARGET_B = [1, 2, 3, 4, 5, 6, 7, 8, 0]
         </p>
         <p>To run the C++ GUI, first make sure you have <code>GTK</code> installed. Then navigate to the directory
             containing <code>AI8Puzzle</code> and execute the following command in the terminal:</p>
-        <pre><code class="language-bash">./make && ./main <-s number of tiles></code></pre>
+        <pre><code class="language-bash">./make && ./main -s number_of_tiles</code></pre>
         <p>The <code>-s</code> flag is optional and allows you to set the number of tiles in the puzzle (including the
             blank tile). The default is 9 tiles. The program will generate a random solvable puzzle and open a window
             where you can interact with the puzzle.</p>
         <div class="center">
-            <img src="./images/elegant_theme.png" title="AI8Puzzle" max-width="90%" alt="Elegant Theme GUI">
+            <img src="./images/elegant_theme.png" title="AI8Puzzle" style="max-width: 90%;" alt="Elegant Theme GUI">
             <p><em>Elegant theme GUI</em></p>
         </div>
         <p>You can move the tiles by clicking on them, or use the keyboard arrow keys. You can also use the following
@@ -289,7 +284,7 @@ TARGET_B = [1, 2, 3, 4, 5, 6, 7, 8, 0]
             <li><code>ctrl + t</code> - choose new theme from <code>css</code> file</li>
         </ul>
         <div class="center">
-            <img src="./images/menu.png" title="AI8Puzzle" alt="Menu (C++)" max-width="90%">
+            <img src="./images/menu.png" title="AI8Puzzle" alt="Menu (C++)" style="max-width: 90%;">
             <p><em>Menu (C++)</em></p>
         </div>
         <p>To run the Python GUI, first make sure you have <code>tkinter</code> installed. Then navigate to the
@@ -303,11 +298,11 @@ TARGET_B = [1, 2, 3, 4, 5, 6, 7, 8, 0]
         <p>To run the program in the command-line interface mode, navigate to the directory containing
             <code>Tiles.py</code> and execute the following command in the terminal:
         </p>
-        <pre><code class="language-bash">python3 Tiles.py <9 space-separated numbers representing the initial state></code></pre>
+        <pre><code class="language-bash">python3 Tiles.py 9_space_separated_numbers_representing_the_initial_state</code></pre>
         <p>The program will print the results for each algorithm in the required format:</p>
         <pre><code class="language-bash">&lt;Algorithm name&gt;
-        &lt;Explored count - number of expanded nodes&gt;
-        &lt;Solution Path&gt;</code></pre>
+&lt;Explored count - number of expanded nodes&gt;
+&lt;Solution Path&gt;</code></pre>
 
         <h2>Technical Details</h2>
         <pre><code class="language-python">class SearchAlgorithm:
@@ -331,13 +326,15 @@ TARGET_B = [1, 2, 3, 4, 5, 6, 7, 8, 0]
             for the heuristic value <code>h(n)</code>.
         </p>
         <pre><code class="language-python">class PriorityQueueNode(Node):
-    def __init__(self, node):
-        super().__init__(node.state, node.parent)
-        self.priority = None
+            def __init__(self, node):
+                super().__init__(node.state, node.parent)
+                self.priority = None
 
-    def __lt__(self, other):
-        return self.priority < other.priority
-</code></pre>
+            def __lt__(self, other):
+                if self.priority is None or other.priority is None:
+                    raise ValueError("Cannot compare nodes with undefined priority")
+                return self.priority &lt; other.priority
+        </code></pre>
 
         <h3>Search Data Structures</h3>
         <p>The <code>Frontier</code> class acts as the fringe or the boundary between explored and unexplored states. It
@@ -365,8 +362,8 @@ TARGET_B = [1, 2, 3, 4, 5, 6, 7, 8, 0]
 
         <h2>Examples</h2>
         <div class="image-center">
-            <img src="./images/output_example.png" title="AI8Puzzle Output Example" alt="Output Example" max-width="90%" border="1px solid #8CFF57">
-            <img src="./images/output_example2.png" title="AI8Puzzle Output Example 2" alt="Output Example 2" max-width="90%" border="1px solid #8CFF57">
+            <img src="./images/output_example.png" title="AI8Puzzle Output Example" alt="Output Example" style="max-width: 90%;" border="1px solid #8CFF57">
+            <img src="./images/output_example2.png" title="AI8Puzzle Output Example 2" alt="Output Example 2" style="max-width: 90%;" border="1px solid #8CFF57">
         </div>
 
         <h2>Acknowledgments</h2>
@@ -377,9 +374,9 @@ TARGET_B = [1, 2, 3, 4, 5, 6, 7, 8, 0]
         <p>This project is licensed under the MIT License - see the <a href="../LICENSE">LICENSE</a> file for details.</p>
 
     </main>
-        <footer>
-            <p class="center">🕳️ <a href="https://dorpascal.com">Dor Pascal</a> © 2024</p>
-        </footer>
+    <footer>
+        <p class="center">🕳️ <a href="https://dorpascal.com">Dor Pascal</a> © 2024</p>
+    </footer>
 </body>
 
 </html>
