@@ -65,18 +65,82 @@
 
         main, .container {
             padding: 2rem;
-            background: #022202;
-            box-shadow: 0 4px 8px rgba(0, 255, 0, 0.2);
-            border-radius: 8px;
             text-align: left;
             width: 100%;
-            margin: 1rem 0;
-            max-width: calc(min(90%, 800px));
         }
 
         main {
             animation: fadeIn 2s ease-in-out;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 1rem;
+            margin: 2rem;
+            padding: 2rem;
+            width: 96%;
+            margin-top: 0;
+            padding-top: 0;
         }
+                section {
+            background: #022202;
+            box-shadow: 0 4px 8px rgba(0, 255, 0, 0.2);
+            margin: 2rem 0;
+            border-radius: 8px;
+            padding: 2rem;
+        }
+
+        @media (min-width: 1024px) {
+            main {
+                grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+            }
+        }
+
+
+        @media (max-width: 768px) {
+            main {
+                padding: 0;
+                margin:  0;
+                width: 100%;
+            }
+
+            section {
+                padding: 1rem;
+                margin: 1rem 0;
+                border-radius: 0;
+            }
+        }
+
+
+        @media (max-width: 768px) {
+            main, .container {
+                padding: 1rem;
+            }
+
+            header {
+                padding: 0.5rem 0;
+            }
+
+            section {
+            padding: 1em;
+            margin: 1rem 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            main {
+            display: inline;
+                padding: 0;
+                margin:  0;
+                width: 100%;
+            }
+
+            section {
+                padding: 1em;
+                margin: 1em 0;
+                border-radius: 0;
+            }
+        }
+
+
 
         h1, h2, h3 {
             color: #8CFF57;
@@ -102,9 +166,10 @@
             width: 100%;
             max-width: 800px;
             aspect-ratio: 16/9;
+            margin: 0 auto;
         }
 
-        a, button {
+        a:not(header a), button {
             color: #8CFF57;
             background-color: #022202;
             border: 1px solid #8CFF57;
@@ -114,7 +179,7 @@
             text-shadow: 0 0 5px #0F0;
         }
 
-        a:hover, button:hover {
+        a:not(header a):hover, button:hover {
             background-color: #8CFF57;
             color: #000;
             border-color: #000;
@@ -124,17 +189,35 @@
             border-radius: 8px;
             margin: 1rem 0;
             max-width: 100%;
+            cursor: pointer;
         }
 
-        @media (max-width: 768px) {
-            main, .container {
-                padding: 1rem;
-            }
 
-            header {
-                padding: 0.5rem 0;
-            }
+        button {
+            cursor: pointer;
+            margin: 0 auto;
+            display: block;
+            border-radius: 5px;
+
         }
+
+        code {
+            background-color: #022202;
+            border-radius: 5px;
+        }
+
+        header a{
+            color: #8CFF57;
+            text-decoration: none;
+            transition: color 0.5s;
+        }
+        .shields{
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/atom-one-dark.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js"></script>
@@ -146,12 +229,28 @@
 <body>
     <header>
         <h1>🕳️ _Matrix</h1>
+        <div class="shields">
+        <a href="https://github.com/Dor-sketch/15-puzzle" title="View on GitHub" aria-label="View on GitHub">
+            <img src="https://img.shields.io/github/stars/Dor-sketch/15-puzzle?style=social" alt="GitHub stars">
+        </a>
+        <a href="https://github.com/Dor-sketch/15-puzzle" title="View on GitHub" aria-label="View on GitHub">
+            <img src="https://img.shields.io/github/forks/Dor-sketch/15-puzzle?style=social" alt="GitHub forks">
+        </a>
+        <a href="https://github.com/Dor-sketch/15-puzzle" title="View on GitHub" aria-label="View on GitHub">
+            <img src="https://img.shields.io/github/issues/Dor-sketch/15-puzzle?style=social" alt="GitHub issues">
+        </a>
+        <a href="https://dorpascal.com" title="Dor Pascal" aria-label="Dor Pascal">
+            <img src="https://img.shields.io/badge/Dor-Pascal-8CFF57?style=for-the-badge" alt="Dor Pascal">
+        </a>
+        </div>
     </header>
     <div class="container">
-        <h2>App Demo</h2>
-        <iframe src="./game.html" title="App Demo"></iframe>
+        <h2 style="text-align: center;">Welcome to the Matrix Project</h2>
+        <button id="loadGameButton" aria-label="Load Game" title="Load Simulation">Load Demo</button>
+        <iframe id="gameFrame" width="100%" height="600px" style="border: none; display: none;"></iframe>
     </div>
     <main>
+    <section>
         <h2>Project Overview</h2>
         <p>Project <strong>_Matrix</strong> (Line-Matrix) is a comprehensive exploration of AI search algorithms, using
             the <em>8-Puzzle</em> problem as a case study. The program includes implementations of famous search
@@ -160,9 +259,18 @@
             course at the <em>Open University of Israel</em>, and earned a perfect score of 100/100.</p>
 
         <div class="center">
-            <img src="./images/usage_cubes.gif" title="AI8Puzzle" style="max-width: 90%;" alt="AI8Puzzle GTK GUI">
+            <img src="./images/reduced_mov.gif" title="AI8Puzzle" style="max-width: 90%;" alt="AI8Puzzle Animation">
             <p><em>AI8Puzzle GTK GUI (C++)</em></p>
         </div>
+        <h2>Gallery</h2>
+ <div class="center">
+            <img src="./images/usage_cubes.gif" title="AI8Puzzle" style="max-width: 90%;" alt="AI8Puzzle GTK GUI">
+            <img src="./images/neu_theme.jpg" title="AI8Puzzle" style="max-width: 90%;" alt="AI8Puzzle Theme">
+            <img src="./images/neu_theme2.png" title="AI8Puzzle" style="max-width: 90%;" alt="AI8Puzzle Theme">
+            <p><em>theMatrix theme GUI</em></p>
+        </div>
+        </section>
+        <section>
 
         <h2>The 8-Puzzle Problem</h2>
         <p>The 8-Puzzle problem is a classic AI problem, where the goal is to move the tiles from the initial state to
@@ -251,14 +359,10 @@ TARGET_B = [1, 2, 3, 4, 5, 6, 7, 8, 0]
         <h3>Action Cost</h3>
         <p>Each action performed by <code>generate_children</code> above costs 1, so <code>1</code> is the action cost
             of the problem. The cost is managed in the <code>Node</code> class which will be described below.</p>
-
+</section>
+<section>
         <h2>Running the Program</h2>
-        <div class="center">
-            <img src="./images/reduced_mov.gif" title="AI8Puzzle" style="max-width: 90%;" alt="AI8Puzzle Animation">
-            <img src="./images/neu_theme.jpg" title="AI8Puzzle" style="max-width: 90%;" alt="AI8Puzzle Theme">
-            <img src="./images/neu_theme2.png" title="AI8Puzzle" style="max-width: 90%;" alt="AI8Puzzle Theme">
-            <p><em>theMatrix theme GUI</em></p>
-        </div>
+
         <p>The program supports both interactive GUI and command-line interfaces. Two GUI versions are available: one
             implemented in Python using the <code>tkinter</code> library, and another implemented in C++ using the
             <code>GTK</code> library. The Python version is easier to use and has more features, while the C++ version
@@ -304,6 +408,9 @@ TARGET_B = [1, 2, 3, 4, 5, 6, 7, 8, 0]
 &lt;Explored count - number of expanded nodes&gt;
 &lt;Solution Path&gt;</code></pre>
 
+</section>
+
+<section>
         <h2>Technical Details</h2>
         <pre><code class="language-python">class SearchAlgorithm:
     class ExploredSet:
@@ -359,24 +466,47 @@ TARGET_B = [1, 2, 3, 4, 5, 6, 7, 8, 0]
             the target state. The heuristics are used to guide the search algorithms in finding the optimal path to the
             target state.
         </p>
-
-        <h2>Examples</h2>
+</section>
+<section>
+        <h2>Console Output</h2>
         <div class="image-center">
             <img src="./images/output_example.png" title="AI8Puzzle Output Example" alt="Output Example" style="max-width: 90%;" border="1px solid #8CFF57">
             <img src="./images/output_example2.png" title="AI8Puzzle Output Example 2" alt="Output Example 2" style="max-width: 90%;" border="1px solid #8CFF57">
         </div>
-
+</section>
+<section>
         <h2>Acknowledgments</h2>
         <p>Inspired by the book <em>"Artificial Intelligence: A Modern Approach"</em> by Stuart Russell and Peter
             Norvig. Thanks to the Open University of Israel for the opportunity to work on this project.</p>
-
+</section>
+<section>
         <h2>License</h2>
-        <p>This project is licensed under the MIT License - see the <a href="../LICENSE">LICENSE</a> file for details.</p>
-
+        <p>This project is licensed under the MIT License - see the <a href="https://raw.githubusercontent.com/Dor-sketch/15-puzzle/main/LICENSE">LICENSE</a> file for details.</p>
+</section>
     </main>
     <footer>
         <p class="center">🕳️ <a href="https://dorpascal.com">Dor Pascal</a> © 2024</p>
     </footer>
+        <script>
+document.getElementById('loadGameButton').addEventListener('click', function() {
+    document.getElementById('gameFrame').src = "game.html";
+    document.getElementById('gameFrame').style.display = 'block';
+    // hide the button after loading the game
+    document.getElementById('loadGameButton').style.display = 'none';
+});
+
+
+
+document.querySelectorAll('img').forEach((img) => {
+// check not to add if already has a link
+    if (img.parentElement.tagName === 'A') return;
+    img.addEventListener('click', function() {
+        window.open(this.src, '_blank');
+    });
+    img.setAttribute('title', 'Click to view image in full size'); // Set a general title for all images
+    img.setAttribute('alt', 'Image description'); // Set a general alt text for all images
+});
+</script>
 </body>
 
 </html>
