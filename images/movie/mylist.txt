@@ -1,6 +1,0 @@
-file 0.mov
-file 1.mov
-file 2.mov
-file 3.mov
-file 4.mov
-file output.mov
